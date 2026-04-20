@@ -10,84 +10,210 @@
     <style>
         :root { --bg: #0a0f1a; --surface: #131b2e; --text: #e8ecf4; --primary: #22c55e; }
         body.light-mode { --bg: #f3f4f6; --surface: #ffffff; --text: #1f2937; --primary: #16a34a; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; transition: 0.3s; margin: 0; }
-        .hero-gradient { background: linear-gradient(160deg, #0a1628, #0d2218); padding: 60px 20px; }
-        .container-mapa { max-width: 900px; margin: -30px auto 40px; padding: 0 20px; }
-        .map-card, .detail-card { background-color: var(--surface); padding: 25px; border-radius: 24px; border: 1px solid rgba(34, 197, 94, 0.1); }
-        .biome-path { fill: rgba(34, 197, 94, 0.05); stroke: var(--primary); stroke-width: 1.5; cursor: pointer; transition: 0.3s; }
-        .biome-path:hover, .biome-path.active { fill: var(--primary); opacity: 0.7; }
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .info-box { background: rgba(34, 197, 94, 0.08); padding: 15px; border-radius: 16px; }
-        .sus-bar { background: rgba(0,0,0,0.1); height: 12px; border-radius: 10px; overflow: hidden; }
-        #susFill { height: 100%; background: var(--primary); width: 0%; transition: 1.5s ease; }
-        .dark-mode-toggle { position: fixed; top: 20px; right: 20px; background-color: var(--surface); color: var(--primary); border: 2px solid var(--primary); padding: 12px; border-radius: 50%; cursor: pointer; z-index: 100; }
-        .badge { background: var(--primary); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
-        .hidden { display: none; }
-        @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; transition: 0.3s; margin: 0; overflow-x: hidden; }
+        
+        .hero-gradient { background: linear-gradient(160deg, #0a1628, #0d2218); padding: 40px 20px; }
+        .container-main { max-width: 1000px; margin: -30px auto 40px; padding: 0 20px; }
+        
+        .card { background-color: var(--surface); padding: 25px; border-radius: 24px; border: 1px solid rgba(34, 197, 94, 0.1); transition: 0.3s; }
+        .biome-path { fill: rgba(34, 197, 94, 0.05); stroke: var(--primary); stroke-width: 1.2; cursor: pointer; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .biome-path:hover, .biome-path.active { fill: var(--primary); fill-opacity: 0.6; stroke-width: 3; filter: drop-shadow(0 0 8px var(--primary)); }
+        
+        @keyframes pulse { 0% { stroke-width: 1.2; } 50% { stroke-width: 5; stroke: #fff; } 100% { stroke-width: 1.2; } }
+        .found-pulse { animation: pulse 1.5s infinite; }
+
+        .sus-bar { background: rgba(0,0,0,0.2); height: 10px; border-radius: 10px; overflow: hidden; }
+        #susFill { height: 100%; background: var(--primary); width: 0%; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        #fraseDinamica { transition: opacity 0.8s ease-in-out; opacity: 1; }
+        .dark-mode-toggle { position: fixed; top: 20px; right: 20px; background: var(--surface); color: var(--primary); border: 2px solid var(--primary); padding: 10px; border-radius: 50%; cursor: pointer; z-index: 100; }
+        
+        .search-box { background: var(--surface); border: 2px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 12px 20px; color: var(--text); width: 100%; max-width: 400px; outline: none; transition: 0.3s; }
+        .search-box:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
     </style>
 </head>
 <body>
+
     <button class="dark-mode-toggle" id="darkToggle"><i data-lucide="moon"></i></button>
+
     <header class="hero-gradient text-center">
-        <span class="badge" id="visitBadge">Bem-vindo</span>
-        <h1 class="text-3xl font-bold text-white mt-2">Agro Forte, Futuro Sustentável</h1>
-    </header>
-    <main class="container-mapa">
-        <div class="map-card shadow-2xl">
-            <svg viewBox="0 0 800 500" id="brazilMap" class="w-full h-auto">
-                <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
-                <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
-                <path class="biome-path" data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
-                <path class="biome-path" data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
-                <path class="biome-path" data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
-                <path class="biome-path" data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
-            </svg>
+        <span class="bg-green-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg" id="visitBadge">Agrinho 2026</span>
+        <h1 class="text-4xl font-extrabold text-white mt-4 mb-2">Agro Forte, Futuro Sustentável</h1>
+        <div class="h-12 flex items-center justify-center">
+            <p id="fraseDinamica" class="text-green-400 italic text-lg text-center px-4 font-light italic">"O equilíbrio entre produção e preservação é a nossa maior colheita."</p>
         </div>
-        <section id="detailSection" class="hidden mt-8">
-            <div class="detail-card">
-                <div class="flex items-center gap-4 mb-6">
-                    <span id="biomeEmoji" class="text-4xl"></span>
-                    <h3 id="biomeName" class="text-2xl font-bold text-green-500"></h3>
-                </div>
-                <div class="info-grid">
-                    <div class="info-box"><strong>🌾 Produção</strong><p id="bioProducao" class="text-sm"></p></div>
-                    <div class="info-box"><strong>🌿 Conservação</strong><p id="bioConservacao" class="text-sm"></p></div>
-                </div>
-                <div class="mt-6"><div class="sus-bar"><div id="susFill"></div></div></div>
+    </header>
+
+    <main class="container-main">
+        <div class="flex flex-col items-center mb-10 gap-2">
+            <input type="text" id="biomeSearch" placeholder="Pesquisar bioma ou tecnologia sustentável..." class="search-box shadow-xl">
+            <p class="text-[10px] uppercase opacity-50 tracking-widest">Dica: Tente 'Soja', 'Açaí' ou 'Gado'</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 card shadow-2xl">
+                <h2 class="text-sm font-bold uppercase text-green-500 mb-4 flex items-center gap-2">
+                    <i data-lucide="map"></i> Mapa Interativo
+                </h2>
+                <svg viewBox="0 0 800 500" id="brazilMap" class="w-full h-auto">
+                    <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
+                    <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
+                    <path class="biome-path" data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
+                    <path class="biome-path" data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
+                    <path class="biome-path" data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
+                    <path class="biome-path" data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
+                </svg>
             </div>
-        </section>
+
+            <div class="flex flex-col gap-6">
+                <section id="detailSection" class="card hidden border-l-4 border-green-500">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span id="biomeEmoji" class="text-3xl"></span>
+                        <h3 id="biomeName" class="text-xl font-bold text-green-500 tracking-tight"></h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <strong class="text-[10px] text-green-400 uppercase tracking-tighter">Produção Agro</strong>
+                            <p id="bioProducao" class="text-sm font-medium"></p>
+                        </div>
+                        <div>
+                            <strong class="text-[10px] text-blue-400 uppercase tracking-tighter">Foco Sustentável</strong>
+                            <p id="bioConservacao" class="text-sm font-medium"></p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[10px] mb-1 font-bold uppercase">
+                                <span>Índice de Equilíbrio</span>
+                                <span id="susValue">0%</span>
+                            </div>
+                            <div class="sus-bar"><div id="susFill"></div></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="card bg-green-900/10">
+                    <h4 class="text-xs font-bold text-green-500 uppercase flex items-center gap-2 mb-2">
+                        <i data-lucide="info"></i> Curiosidade
+                    </h4>
+                    <p id="curiosidadeTexto" class="text-xs leading-relaxed opacity-80">
+                        Explore o mapa para entender como tecnologia e natureza trabalham juntas.
+                    </p>
+                </div>
+
+                <div id="quizArea" class="card border-2 border-dashed border-green-500/20 text-center">
+                    <h4 class="text-sm font-bold mb-3">Desafio Agrinho</h4>
+                    <div id="quizContent">
+                        <p class="text-xs mb-4 opacity-70">Você é um mestre do agro sustentável?</p>
+                        <button onclick="startQuiz()" class="bg-green-600 w-full py-2 rounded-lg text-white font-bold text-sm hover:scale-105 transition">Começar Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
     <script>
         const BIOMES = {
-            amazonia: { name: 'Amazônia', emoji: '🌳', producao: 'Castanha, açaí e manejo.', conservacao: 'Monitoramento.', sustentabilidade: 92 },
-            cerrado: { name: 'Cerrado', emoji: '🌾', producao: 'Grãos sustentáveis.', conservacao: 'Nascentes.', sustentabilidade: 85 },
-            pantanal: { name: 'Pantanal', emoji: '🐊', producao: 'Pecuária orgânica.', conservacao: 'Fauna.', sustentabilidade: 88 },
-            caatinga: { name: 'Caatinga', emoji: '🌵', producao: 'Mel e frutas.', conservacao: 'Recursos hídricos.', sustentabilidade: 70 },
-            mata_atlantica: { name: 'Mata Atlântica', emoji: '🦜', producao: 'Café e silvicultura.', conservacao: 'Corredores.', sustentabilidade: 78 },
-            pampa: { name: 'Pampa', emoji: '🐴', producao: 'Vitivinicultura.', conservacao: 'Campos nativos.', sustentabilidade: 75 }
+            amazonia: { name: 'Amazônia', emoji: '🌳', producao: 'Bioeconomia: Açaí, cacau e castanha.', conservacao: 'Manejo florestal e desmatamento zero.', sustentabilidade: 92, curiosidade: 'O açaí gera mais lucro para a região do que a pecuária extensiva, mantendo a floresta em pé.' },
+            cerrado: { name: 'Cerrado', emoji: '🌾', producao: 'Grãos: Soja, milho e algodão.', conservacao: 'Plantio direto e integração Lavoura-Pecuária.', sustentabilidade: 85, curiosidade: 'O sistema de plantio direto no Cerrado retém toneladas de carbono no solo, ajudando o clima.' },
+            pantanal: { name: 'Pantanal', emoji: '🐊', producao: 'Pecuária de corte sustentável.', conservacao: 'Uso do gado para prevenção de incêndios.', sustentabilidade: 88, curiosidade: 'O gado pantaneiro come a biomassa seca, reduzindo drasticamente o risco de grandes fogos.' },
+            caatinga: { name: 'Caatinga', emoji: '🌵', producao: 'Fruticultura irrigada de alta qualidade.', conservacao: 'Reúso de água e convivência com o semiárido.', sustentabilidade: 75, curiosidade: 'O Vale do São Francisco usa irrigação inteligente para exportar mangas para o mundo todo.' },
+            mata_atlantica: { name: 'Mata Atlântica', emoji: '🦜', producao: 'Cafés especiais e silvicultura.', conservacao: 'Corredores ecológicos em fazendas.', sustentabilidade: 78, curiosidade: 'Produtores de café estão plantando árvores nativas entre os cafezais para melhorar o sabor e o clima.' },
+            pampa: { name: 'Pampa', emoji: '🐴', producao: 'Gado de corte e vitivinicultura.', conservacao: 'Preservação de pastagens nativas.', sustentabilidade: 82, curiosidade: 'O Pampa gaúcho produz carne premium em campos originais, preservando o solo milenar.' }
         };
-        document.addEventListener('DOMContentLoaded', () => {
-            const badge = document.getElementById('visitBadge');
-            let v = parseInt(localStorage.getItem('visitas') || '0') + 1;
-            localStorage.setItem('visitas', v);
-            if(badge) badge.innerText = `${v}ª Visita`;
 
+        const frases = [
+            "Equilíbrio é produzir hoje sem comprometer o amanhã.",
+            "Tecnologia e natureza: a parceria que alimenta o planeta.",
+            "Agro Forte é aquele que protege sua maior riqueza: a terra.",
+            "Sustentabilidade é a semente do nosso sucesso futuro."
+        ];
+
+        let currentQuestion = 0;
+        const quizQuestions = [
+            { q: "O 'Boi Bombeiro' ajuda a prevenir incêndios em qual bioma?", a: ["Cerrado", "Pantanal", "Pampa"], r: 1 },
+            { q: "Qual técnica reduz o uso de químicos no solo?", a: ["Plantio Direto", "Queimada", "Irrigação"], r: 0 },
+            { q: "Sustentabilidade no agro significa:", a: ["Parar de produzir", "Equilíbrio", "Aumentar químicos"], r: 1 }
+        ];
+
+        function startQuiz() {
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizQuestions[currentQuestion];
+            let html = `<p class="text-sm font-bold mb-4">${q.q}</p><div class="flex flex-col gap-2">`;
+            q.a.forEach((opt, i) => {
+                html += `<button onclick="checkAnswer(${i})" class="bg-surface border border-green-500/30 py-2 rounded text-xs hover:bg-green-500/20 transition">${opt}</button>`;
+            });
+            html += `</div>`;
+            document.getElementById('quizContent').innerHTML = html;
+        }
+
+        function checkAnswer(idx) {
+            if(idx === quizQuestions[currentQuestion].r) {
+                currentQuestion++;
+                if(currentQuestion < quizQuestions.length) showQuestion();
+                else document.getElementById('quizContent').innerHTML = `<p class="text-green-500 font-bold">Parabéns! Você é um Guardião da Natureza!</p><button onclick="startQuiz()" class="mt-4 text-xs underline">Refazer</button>`;
+            } else {
+                alert("Tente novamente! O futuro depende de aprender mais.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Frases com Crossfade Clean
+            let fraseIdx = 0;
+            const fraseEl = document.getElementById('fraseDinamica');
+            setInterval(() => {
+                fraseEl.style.opacity = 0;
+                setTimeout(() => {
+                    fraseIdx = (fraseIdx + 1) % frases.length;
+                    fraseEl.innerText = `"${frases[fraseIdx]}"`;
+                    fraseEl.style.opacity = 1;
+                }, 800);
+            }, 5000);
+
+            // Pesquisa Funcional
+            document.getElementById('biomeSearch').addEventListener('input', (e) => {
+                const search = e.target.value.toLowerCase();
+                const paths = document.querySelectorAll('.biome-path');
+                paths.forEach(p => p.classList.remove('found-pulse'));
+
+                if(search.length > 2) {
+                    for(const key in BIOMES) {
+                        const b = BIOMES[key];
+                        if(b.name.toLowerCase().includes(search) || b.producao.toLowerCase().includes(search) || b.curiosidade.toLowerCase().includes(search)) {
+                            const el = document.querySelector(`[data-biome="${key}"]`);
+                            el.classList.add('found-pulse');
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            });
+
+            // Clique no Mapa
             document.querySelectorAll('.biome-path').forEach(path => {
                 path.addEventListener('click', () => {
                     const info = BIOMES[path.dataset.biome];
-                    if(!info) return;
+                    document.querySelectorAll('.biome-path').forEach(p => p.classList.remove('active', 'found-pulse'));
+                    path.classList.add('active');
+
                     document.getElementById('detailSection').classList.remove('hidden');
                     document.getElementById('biomeName').innerText = info.name;
                     document.getElementById('biomeEmoji').innerText = info.emoji;
                     document.getElementById('bioProducao').innerText = info.producao;
                     document.getElementById('bioConservacao').innerText = info.conservacao;
+                    document.getElementById('curiosidadeTexto').innerText = info.curiosidade;
+                    document.getElementById('susValue').innerText = info.sustentabilidade + '%';
                     document.getElementById('susFill').style.width = info.sustentabilidade + '%';
                 });
             });
+
+            // Dark Mode
             document.getElementById('darkToggle').addEventListener('click', () => {
                 document.body.classList.toggle('light-mode');
                 lucide.createIcons();
             });
+
             lucide.createIcons();
         });
     </script>
