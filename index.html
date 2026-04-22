@@ -3,119 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioMonitor 2026 | Agrinho</title>
+    <title>BioMonitor 2026 | Ecossistema Agrinho</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #05080f;
-            --card: rgba(15, 23, 42, 0.8);
-            --border: rgba(34, 197, 94, 0.2);
-            --primary: #22c55e;
-            --text: #f8fafc;
-        }
-
-        body.light-mode {
-            --bg: #f8fafc;
-            --card: rgba(255, 255, 255, 0.9);
-            --border: rgba(22, 163, 74, 0.1);
-            --primary: #16a34a;
-            --text: #0f172a;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass {
-            background: var(--card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-        }
-
-        /* Hero Styling */
-        .hero-pattern {
-            background-image: radial-gradient(circle at 2px 2px, var(--border) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-
-        /* Map styling */
-        .biome-path {
-            fill: rgba(34, 197, 94, 0.03);
-            stroke: var(--primary);
-            stroke-width: 1;
-            transition: all 0.5s ease;
-            cursor: pointer;
-        }
-
-        .biome-path:hover, .biome-path.active {
-            fill: var(--primary);
-            fill-opacity: 0.4;
-            stroke-width: 2;
-            filter: drop-shadow(0 0 12px var(--primary));
-        }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .float-anim { animation: float 4s ease-in-out infinite; }
-
-        .progress-bar {
-            height: 8px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        #susFill { transition: width 1s cubic-bezier(0.65, 0, 0.35, 1); }
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
 
-    <button id="darkToggle" class="fixed top-6 right-6 z-50 p-3 glass hover:scale-110 transition-transform">
-        <i data-lucide="moon" class="w-6 h-6 text-green-500"></i>
-    </button>
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-center">
+        <div class="glass px-6 py-2 flex items-center gap-6 text-xs font-bold uppercase tracking-widest">
+            <a href="#monitor" class="hover:text-green-500 transition-colors">Monitor</a>
+            <a href="#pilares" class="hover:text-green-500 transition-colors">Pilares</a>
+            <a href="#evolucao" class="hover:text-green-500 transition-colors">Evolução</a>
+            <a href="#sazonal" class="hover:text-green-500 transition-colors">Sazonal</a>
+            <button id="darkToggle" class="p-2 bg-green-500/10 rounded-full text-green-500">
+                <i data-lucide="moon" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </nav>
 
-    <header class="relative pt-20 pb-32 overflow-hidden hero-pattern">
+    <header class="relative pt-32 pb-20 overflow-hidden hero-pattern">
         <div class="container mx-auto px-6 text-center">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-green-500/10 text-green-500 rounded-full border border-green-500/20">
-                🌱 Agrinho 2026 - Inovação & Sustentabilidade
+                🌱 Agrinho 2026 - Inteligência Digital
             </span>
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-                O Futuro do Agro é <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
-                    Conectado com a Natureza
-                </span>
+                BioMonitor <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">2026</span>
             </h1>
             <p class="max-w-2xl mx-auto text-lg opacity-70">
-                Explore a harmonia entre a tecnologia de ponta e a preservação dos biomas brasileiros. 
-                O equilíbrio perfeito para alimentar o mundo.
+                A convergência entre dados geoespaciais, preservação de biomas e a produtividade sustentável do futuro.
             </p>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 -mt-20">
+    <main class="container mx-auto px-6">
         
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
-            
+        <div id="monitor" class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
             <div class="lg:col-span-7 glass p-8 shadow-2xl relative">
                 <div class="flex items-center justify-between mb-8">
-                    <div>
-                        <h2 class="text-2xl font-bold">Mapa Bio-Interativo</h2>
-                        <p class="text-sm opacity-60">Selecione uma região para analisar os dados</p>
-                    </div>
-                    <i data-lucide="map-pin" class="text-green-500 animate-pulse"></i>
+                    <h2 class="text-2xl font-bold">Monitor de Biomas</h2>
+                    <i data-lucide="map" class="text-green-500"></i>
                 </div>
-                
                 <svg viewBox="250 180 250 250" class="w-full h-auto max-h-[500px]">
                     <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
                     <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
@@ -127,40 +58,35 @@
             </div>
 
             <div class="lg:col-span-5 flex flex-col gap-6">
-                <section id="details" class="glass p-8 flex-grow border-l-4 border-green-500">
+                <section id="detailSection" class="glass p-8 flex-grow border-l-4 border-green-500">
                     <div id="placeholderMsg" class="h-full flex flex-col items-center justify-center text-center opacity-50">
                         <i data-lucide="info" class="w-12 h-12 mb-4"></i>
-                        <p>Clique em um bioma no mapa para visualizar informações detalhadas de produção e sustentabilidade.</p>
+                        <p>Selecione um bioma no mapa para carregar os dados.</p>
                     </div>
                     
                     <div id="contentArea" class="hidden animate-in fade-in slide-in-from-right-4 duration-500">
                         <div class="flex items-center gap-4 mb-6">
                             <span id="bEmoji" class="text-5xl p-4 bg-green-500/10 rounded-2xl"></span>
                             <div>
-                                <h3 id="bName" class="text-3xl font-black text-green-500 tracking-tight"></h3>
-                                <p class="text-sm opacity-60">Status de Preservação 2026</p>
+                                <h3 id="bName" class="text-3xl font-black text-green-500"></h3>
+                                <p class="text-sm opacity-60">Status Sustentável 2026</p>
                             </div>
                         </div>
-
-                        <div class="space-y-6">
-                            <div class="p-4 bg-white/5 rounded-xl border border-white/10">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-green-400">Destaque de Produção</span>
-                                <p id="bProd" class="mt-1 text-lg font-medium"></p>
+                        <div class="space-y-4 text-sm">
+                            <div class="p-4 bg-white/5 rounded-xl">
+                                <span class="text-[10px] font-bold uppercase text-green-400">Produção Principal</span>
+                                <p id="bProd" class="mt-1 font-medium"></p>
                             </div>
-                            
-                            <div class="p-4 bg-white/5 rounded-xl border border-white/10">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-blue-400">Tecnologia Aplicada</span>
-                                <p id="bCons" class="mt-1 text-lg font-medium"></p>
+                            <div class="p-4 bg-white/5 rounded-xl">
+                                <span class="text-[10px] font-bold uppercase text-blue-400">Técnica</span>
+                                <p id="bCons" class="mt-1 font-medium"></p>
                             </div>
-
                             <div>
-                                <div class="flex justify-between items-end mb-2">
-                                    <span class="text-xs font-bold uppercase">Índice de Sustentabilidade</span>
-                                    <span id="susVal" class="text-2xl font-black text-green-500">0%</span>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-xs font-bold uppercase tracking-tighter">Eficiência BioMonitor</span>
+                                    <span id="susVal" class="text-green-500 font-bold">0%</span>
                                 </div>
-                                <div class="progress-bar">
-                                    <div id="susFill" class="h-full bg-gradient-to-r from-green-600 to-green-400 shadow-[0_0_15px_rgba(34,197,94,0.5)]" style="width: 0%"></div>
-                                </div>
+                                <div class="progress-bar"><div id="susFill" class="h-full bg-green-500" style="width: 0%"></div></div>
                             </div>
                         </div>
                     </div>
@@ -168,149 +94,101 @@
 
                 <section class="glass p-6 bg-green-500/5">
                     <h4 class="text-sm font-bold uppercase mb-4 flex items-center gap-2">
-                        <i data-lucide="award" class="w-4 h-4 text-green-500"></i> Desafio de Conhecimento
+                        <i data-lucide="award" class="w-4 h-4 text-green-500"></i> AgroQuiz
                     </h4>
                     <div id="quizBox">
-                        <p class="text-sm opacity-70 mb-4">Você está pronto para o Agrinho 2026? Teste seu conhecimento rápido.</p>
-                        <button onclick="startQuiz()" class="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-green-500/20">Iniciar Quiz</button>
+                        <p class="text-xs opacity-70 mb-4">Teste seus conhecimentos tecnológicos.</p>
+                        <button id="btnStartQuiz" class="w-full py-3 bg-green-500 text-white font-bold rounded-xl text-sm">Iniciar</button>
                     </div>
                 </section>
             </div>
         </div>
 
-        <section class="mb-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Os 3 Pilares do Agro Tech</h2>
-                <div class="h-1 w-20 bg-green-500 mx-auto rounded-full"></div>
+        <section id="pilares" class="mb-32 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass p-8 group hover:border-green-500/50 transition-all">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="leaf" class="text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Sustentabilidade</h3>
+                    <p class="text-sm opacity-60 leading-relaxed">Foco na regeneração de biomas, uso de bioinsumos e práticas que garantem o futuro do solo.</p>
+                </div>
+
+                <div class="glass p-8 group hover:border-blue-500/50 transition-all border-t-4 border-t-blue-500/30">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="trending-up" class="text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Produtividade</h3>
+                    <p class="text-sm opacity-60 leading-relaxed">Otimização de safras através de tecnologia de precisão, reduzindo desperdícios.</p>
+                </div>
+
+                <div class="glass p-8 group hover:border-purple-500/50 transition-all">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="cpu" class="text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Tecnologia IA</h3>
+                    <p class="text-sm opacity-60 leading-relaxed">Monitoramento em tempo real com satélites e algoritmos preditivos de clima.</p>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass p-8 hover:border-green-500/50 transition-colors group">
-                    <div class="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="database" class="text-green-500"></i>
+        </section>
+
+        <section id="evolucao" class="mb-32">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold uppercase tracking-widest">Linha do Tempo</h2>
+            </div>
+            <div class="relative max-w-4xl mx-auto timeline-line">
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8">
+                    <div class="md:w-5/12 w-full glass p-6 order-2 md:order-1">
+                        <span class="text-green-500 font-bold text-xs uppercase">Séc. XX</span>
+                        <h4 class="font-bold text-lg mb-2">Agricultura 1.0</h4>
+                        <p class="text-sm opacity-70">Trabalho manual e tração animal.</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Big Data no Campo</h3>
-                    <p class="text-sm opacity-60 leading-relaxed">Coleta massiva de dados do solo e clima para decisões milimétricas, reduzindo desperdícios em até 40%.</p>
-                </div>
-                <div class="glass p-8 hover:border-blue-500/50 transition-colors group">
-                    <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="cloud-rain" class="text-blue-500"></i>
+                    <div class="z-20 flex items-center justify-center bg-green-500 w-10 h-10 rounded-full order-1">
+                        <i data-lucide="hand" class="w-5 h-5 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Gestão Hídrica</h3>
-                    <p class="text-sm opacity-60 leading-relaxed">Sensores IoT que monitoram a umidade profunda, ativando a irrigação apenas quando e onde é estritamente necessário.</p>
+                    <div class="md:w-5/12 hidden md:block order-3"></div>
                 </div>
-                <div class="glass p-8 hover:border-yellow-500/50 transition-colors group">
-                    <div class="w-14 h-14 bg-yellow-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <i data-lucide="zap" class="text-yellow-500"></i>
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8">
+                    <div class="md:w-5/12 hidden md:block"></div>
+                    <div class="z-20 flex items-center justify-center bg-blue-500 w-10 h-10 rounded-full">
+                        <i data-lucide="satellite" class="w-5 h-5 text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Energia Limpa</h3>
-                    <p class="text-sm opacity-60 leading-relaxed">Fazendas autossuficientes utilizando biogás e energia solar, transformando resíduos em potência produtiva.</p>
+                    <div class="md:w-5/12 w-full glass p-6">
+                        <span class="text-blue-500 font-bold text-xs uppercase">2010-2020</span>
+                        <h4 class="font-bold text-lg mb-2">Agricultura 4.0</h4>
+                        <p class="text-sm opacity-70">Conectividade e sensores IoT.</p>
+                    </div>
                 </div>
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8">
+                    <div class="md:w-5/12 w-full glass border-2 border-green-500/50 p-6 order-2 md:order-1">
+                        <span class="text-green-400 font-bold text-xs uppercase animate-pulse">BioMonitor 2026</span>
+                        <h4 class="font-bold text-lg mb-2 text-green-400">Agricultura 5.0</h4>
+                        <p class="text-sm opacity-70 italic">IA Generativa e Regeneração Bioativa.</p>
+                    </div>
+                    <div class="z-20 flex items-center justify-center bg-green-400 w-12 h-12 rounded-full order-1 shadow-[0_0_20px_rgba(74,222,128,0.5)]">
+                        <i data-lucide="cpu" class="w-6 h-6 text-black"></i>
+                    </div>
+                    <div class="md:w-5/12 hidden md:block order-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sazonal" class="mb-32">
+            <div class="glass p-8 bg-gradient-to-br from-green-500/10 to-transparent">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-12">
+                    <h2 class="text-2xl font-bold">Calendário Bio-Sazonal 📅</h2>
+                    <div id="mesDisplay" class="mt-4 md:mt-0 px-6 py-2 bg-green-500 text-white rounded-full font-bold">Carregando...</div>
+                </div>
+                <div id="calendarGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-black/20 border-t border-white/5 py-12 mt-20">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center font-black text-white shadow-xl shadow-green-500/20">A</div>
-                <div>
-                    <h4 class="font-bold tracking-tighter">BioMonitor 2026</h4>
-                    <p class="text-[10px] uppercase tracking-widest opacity-40">Compromisso Agrinho</p>
-                </div>
-            </div>
-            <div class="flex gap-8 text-sm font-medium opacity-60">
-                <a href="#" class="hover:text-green-500 transition-colors">Sobre o Projeto</a>
-                <a href="#" class="hover:text-green-500 transition-colors">Educação Ambiental</a>
-                <a href="#" class="hover:text-green-500 transition-colors">Contato</a>
-            </div>
-            <div class="flex gap-4">
-                <button class="p-2 hover:text-green-500 transition-colors"><i data-lucide="instagram"></i></button>
-                <button class="p-2 hover:text-green-500 transition-colors"><i data-lucide="github"></i></button>
-            </div>
-        </div>
+    <footer class="bg-black/40 border-t border-white/5 py-12 text-center">
+        <p class="text-xs opacity-40 uppercase tracking-widest">Agrinho 2026 • Tecnologia a serviço da vida</p>
     </footer>
 
-    <script>
-        const BIOMES = {
-            amazonia: { name: 'Amazônia', emoji: '🌳', prod: 'Bioeconomia & Manejo de Frutos Exóticos', cons: 'Monitoramento via Satélite (IA)', sus: 94 },
-            cerrado: { name: 'Cerrado', prod: 'Grãos Sustentáveis e Integração (ILP)', emoji: '🌾', cons: 'Plantio Direto & Recuperação de Solo', sus: 82 },
-            pantanal: { name: 'Pantanal', prod: 'Pecuária Regenerativa & Ecoturismo', emoji: '🐊', cons: 'Boi Bombeiro (Prevenção de Incêndios)', sus: 88 },
-            caatinga: { name: 'Caatinga', prod: 'Fruticultura de Precisão Irrigada', emoji: '🌵', cons: 'Sistemas de Reúso Hídrico', sus: 74 },
-            mata_atlantica: { name: 'Mata Atlântica', prod: 'Agrofloresta e Cafés Especiais', emoji: '🦜', cons: 'Corredores de Biodiversidade', sus: 79 },
-            pampa: { name: 'Pampa', prod: 'Criação em Campo Nativo (Grass-fed)', emoji: '🐴', cons: 'Preservação de Gramíneas Nativas', sus: 81 }
-        };
-
-        const QUIZ = [
-            { q: "Qual tecnologia reduz o desperdício de água no campo?", a: ["Sensores IoT", "Arado manual"], r: 0 },
-            { q: "O que caracteriza a agricultura regenerativa?", a: ["Esgotar o solo", "Recuperar a saúde da terra"], r: 1 }
-        ];
-
-        // Map & Info Logic
-        document.querySelectorAll('.biome-path').forEach(path => {
-            path.addEventListener('click', () => {
-                const data = BIOMES[path.dataset.biome];
-                
-                // UI States
-                document.querySelectorAll('.biome-path').forEach(p => p.classList.remove('active'));
-                path.classList.add('active');
-                
-                document.getElementById('placeholderMsg').classList.add('hidden');
-                document.getElementById('contentArea').classList.remove('hidden');
-
-                // Update Content
-                document.getElementById('bName').innerText = data.name;
-                document.getElementById('bEmoji').innerText = data.emoji;
-                document.getElementById('bProd').innerText = data.prod;
-                document.getElementById('bCons').innerText = data.cons;
-                document.getElementById('susVal').innerText = data.sus + '%';
-                
-                // Animate progress bar
-                const fill = document.getElementById('susFill');
-                fill.style.width = '0%';
-                setTimeout(() => fill.style.width = data.sus + '%', 50);
-            });
-        });
-
-        // Quiz Logic
-        let qIdx = 0;
-        function startQuiz() {
-            qIdx = 0;
-            renderQuestion();
-        }
-
-        function renderQuestion() {
-            const q = QUIZ[qIdx];
-            let html = `<p class="text-sm font-bold mb-4">${q.q}</p><div class="space-y-2">`;
-            q.a.forEach((opt, i) => {
-                html += `<button onclick="checkAns(${i})" class="w-full p-3 text-xs text-left glass hover:bg-green-500/20 transition-all border border-white/5">${opt}</button>`;
-            });
-            document.getElementById('quizBox').innerHTML = html + `</div>`;
-        }
-
-        function checkAns(i) {
-            const isCorrect = i === QUIZ[qIdx].r;
-            if(isCorrect) {
-                qIdx++;
-                if(qIdx < QUIZ.length) renderQuestion();
-                else document.getElementById('quizBox').innerHTML = `<div class="text-center py-4"><i data-lucide="check-circle" class="w-10 h-10 text-green-500 mx-auto mb-2"></i><p class="font-bold">Parabéns! Você é um Agro-Mestre.</p></div>`;
-            } else {
-                alert("Tente novamente! A sustentabilidade exige atenção.");
-            }
-            lucide.createIcons();
-        }
-
-        // Dark Mode
-        document.getElementById('darkToggle').addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const icon = document.querySelector('#darkToggle i');
-            const isLight = document.body.classList.contains('light-mode');
-            icon.setAttribute('data-lucide', isLight ? 'sun' : 'moon');
-            lucide.createIcons();
-        });
-
-        // Init
-        lucide.createIcons();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
