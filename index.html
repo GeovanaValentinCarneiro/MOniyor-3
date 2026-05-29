@@ -7,41 +7,41 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="antialiased">
+<body class="antialiased overflow-x-hidden">
 
     <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-center">
         <div class="glass px-6 py-2 flex items-center gap-6 text-[10px] uppercase font-bold tracking-widest">
             <a href="#monitor" class="hover:text-green-500 transition-colors">Monitor</a>
             <a href="#conhecimento" class="hover:text-green-500 transition-colors">BioConhecimento</a>
-            <a href="#pilares" class="hover:text-green-500 transition-colors">Pilares</a>
             <a href="#evolucao" class="hover:text-green-500 transition-colors">Evolução</a>
-            <a href="#sazonal" class="hover:text-green-500 transition-colors">Sazonal</a>
             <button id="darkToggle" class="p-2 bg-green-500/10 rounded-full text-green-500">
                 <i data-lucide="moon" class="w-4 h-4"></i>
             </button>
         </div>
     </nav>
 
-    <header class="relative pt-32 pb-20 overflow-hidden hero-pattern">
-        <div class="container mx-auto px-6 text-center">
+    <header id="hero" class="relative pt-48 pb-32 overflow-hidden hero-pattern">
+        <div class="container mx-auto px-6 text-center relative z-10" data-aos="fade-up">
             <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest uppercase bg-green-500/10 text-green-500 rounded-full border border-green-500/20">
-                🌱 Agrinho 2026 - Inteligência Digital
+                🌱 Agrinho 2026 - Inovação Sustentável
             </span>
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tight">
                 BioMonitor <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">2026</span>
             </h1>
             <p class="max-w-2xl mx-auto text-lg opacity-70">
-                Agro forte, futuro sustentável: o equilíbrio vital entre a produção de alimentos e a preservação do planeta.
+                Onde a tecnologia de ponta encontra o respeito à terra. Explore o equilíbrio entre produtividade e preservação.
             </p>
         </div>
+        <div class="parallax-layer absolute top-20 left-10 w-32 h-32 bg-green-500/10 rounded-full blur-3xl"></div>
     </header>
 
     <main class="container mx-auto px-6">
         
-        <div id="monitor" class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-32">
+        <div id="monitor" class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-32" data-aos="fade-up">
             <div class="lg:col-span-7 glass p-8 shadow-2xl relative">
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-2xl font-bold">Monitor de Biomas</h2>
@@ -61,28 +61,28 @@
                 <section class="glass p-8 flex-grow border-l-4 border-green-500">
                     <div id="placeholderMsg" class="h-full flex flex-col items-center justify-center text-center opacity-50">
                         <i data-lucide="info" class="w-12 h-12 mb-4"></i>
-                        <p>Selecione um bioma no mapa para carregar dados.</p>
+                        <p>Toque em um bioma no mapa para analisar dados.</p>
                     </div>
                     <div id="contentArea" class="hidden">
                         <div class="flex items-center gap-4 mb-6">
                             <span id="bEmoji" class="text-5xl p-4 bg-green-500/10 rounded-2xl"></span>
                             <div>
                                 <h3 id="bName" class="text-3xl font-black text-green-500"></h3>
-                                <p class="text-sm opacity-60">Status de Equilíbrio</p>
+                                <p class="text-sm opacity-60">Status do Ecossistema</p>
                             </div>
                         </div>
-                        <div class="space-y-4 text-sm">
+                        <div class="space-y-4">
                             <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                                <span class="text-[10px] font-bold uppercase text-green-400">Agro Forte (Produção)</span>
+                                <span class="text-[10px] font-bold uppercase text-green-400">Produção Sustentável</span>
                                 <p id="bProd" class="mt-1 font-medium"></p>
                             </div>
                             <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                                <span class="text-[10px] font-bold uppercase text-blue-400">Futuro Sustentável (Técnica)</span>
+                                <span class="text-[10px] font-bold uppercase text-blue-400">Tecnologia Aplicada</span>
                                 <p id="bCons" class="mt-1 font-medium"></p>
                             </div>
                             <div>
-                                <div class="flex justify-between mb-2 font-bold uppercase text-[10px] tracking-tighter">
-                                    <span>Índice de Sustentabilidade</span>
+                                <div class="flex justify-between mb-2 font-bold uppercase text-[10px]">
+                                    <span>Índice Bio-Digital</span>
                                     <span id="susVal" class="text-green-500">0%</span>
                                 </div>
                                 <div class="progress-bar"><div id="susFill" class="h-full bg-green-500" style="width: 0%"></div></div>
@@ -90,165 +90,86 @@
                         </div>
                     </div>
                 </section>
-
-                <section class="glass p-6 bg-green-500/5">
-                    <h4 class="text-sm font-bold uppercase mb-4 flex items-center gap-2 text-green-500">
-                        <i data-lucide="award" class="w-4 h-4"></i> Desafio AgroTech
-                    </h4>
-                    <div id="quizBox">
-                        <p class="text-xs opacity-70 mb-4">Teste seus conhecimentos sobre o Agro do futuro.</p>
-                        <button id="btnStartQuiz" class="w-full py-3 bg-green-500 text-white font-bold rounded-xl text-sm transition-transform active:scale-95">Iniciar Quiz</button>
-                    </div>
-                </section>
             </div>
         </div>
 
         <section id="conhecimento" class="mb-32">
-            <div class="text-center mb-20">
-                <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-2">
-                    Bio<span class="text-green-500">Conhecimento</span>
-                </h2>
-                <p class="text-sm uppercase tracking-[0.4em] opacity-40 font-bold">A Ciência por trás do Equilíbrio</p>
-                <div class="h-1.5 w-24 bg-gradient-to-r from-green-500 to-emerald-600 mx-auto mt-6 rounded-full"></div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-32">
-                <div class="lg:col-span-7 relative group">
-                    <div class="absolute -inset-4 bg-green-500/10 rounded-[3rem] blur-2xl group-hover:bg-green-500/20 transition-all duration-700"></div>
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 aspect-video lg:aspect-auto lg:h-[450px]">
-                        <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c3c1b?auto=format&fit=crop&q=80&w=1200" alt="Drone" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                        <div class="absolute bottom-6 left-6 glass px-6 py-4 border-green-500/30 flex items-center gap-4">
-                            <div class="p-3 bg-green-500 rounded-2xl shadow-lg shadow-green-500/40">
-                                <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] uppercase font-black opacity-60">Tech Integrada</p>
-                                <p class="font-bold">Monitoramento 5.0</p>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative" data-aos="fade-right">
+                    <div class="rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0c3c1b?auto=format&fit=crop&q=80&w=800" alt="Tecnologia" class="w-full h-[500px] object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 glass p-6 border-green-500/30">
+                        <p class="text-3xl font-black text-green-500">+25%</p>
+                        <p class="text-[10px] uppercase font-bold">Eficiência Hídrica</p>
                     </div>
                 </div>
-
-                <div class="lg:col-span-5 space-y-8 lg:pl-8">
-                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold uppercase tracking-widest border border-green-500/20">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                        </span>
-                        Eficiência Operacional
-                    </div>
-                    <h3 class="text-4xl font-extrabold leading-tight">Inteligência que <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">Alimenta o Futuro</span></h3>
-                    <p class="text-lg opacity-70 leading-relaxed">
-                        A força do Agro brasileiro hoje reside na <strong>tecnologia de precisão</strong>. O monitoramento em tempo real permite que cada semente receba o cuidado exato, otimizando recursos e garantindo que a produção cresça sem a necessidade de expandir áreas sobre a natureza.
-                    </p>
+                <div class="space-y-8" data-aos="fade-left">
+                    <h2 class="text-5xl font-black leading-tight uppercase">Inteligência que <br><span class="text-green-500">Alimenta</span></h2>
+                    <p class="text-lg opacity-70">O campo brasileiro em 2026 é um hub de inovação. Sensores de solo e drones de análise garantem que cada bioma seja respeitado em sua individualidade.</p>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="glass p-5 border-l-4 border-green-500">
-                            <span class="block text-3xl font-black text-green-500">-30%</span>
-                            <span class="text-[10px] uppercase font-bold opacity-60 tracking-widest">Desperdício</span>
+                        <div class="glass p-4 border-t-2 border-green-500">
+                            <i data-lucide="droplet" class="text-green-500 mb-2"></i>
+                            <p class="font-bold">Bio-Insumos</p>
                         </div>
-                        <div class="glass p-5 border-l-4 border-blue-500">
-                            <span class="block text-3xl font-black text-blue-500">+25%</span>
-                            <span class="text-[10px] uppercase font-bold opacity-60 tracking-widest">Precisão</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-5 space-y-8 lg:pr-8 order-2 lg:order-1">
-                    <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-bold uppercase tracking-widest border border-emerald-500/20">
-                        Ciclo Vital
-                    </div>
-                    <h3 class="text-4xl font-extrabold leading-tight">Preservar é a nossa <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-600">Maior Riqueza</span></h3>
-                    <p class="text-lg opacity-70 leading-relaxed">
-                        Um futuro sustentável não é uma opção, é a base da nossa economia. A preservação dos biomas garante o ciclo das águas, a saúde do solo e o equilíbrio climático necessário para que o campo continue próspero.
-                    </p>
-                    <div class="p-6 rounded-3xl bg-gradient-to-r from-emerald-500/10 to-transparent border-l-4 border-emerald-500 italic">
-                        <p class="opacity-80 text-lg">"Produzir com consciência é garantir o alimento de hoje e a vida de amanhã."</p>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-7 relative group order-1 lg:order-2">
-                    <div class="absolute -inset-4 bg-emerald-500/10 rounded-[3rem] blur-2xl group-hover:bg-emerald-500/20 transition-all duration-700"></div>
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 aspect-video lg:aspect-auto lg:h-[450px]">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1200" alt="Natureza" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                        <div class="absolute top-6 right-6 glass p-4 border-white/20 animate-bounce-slow">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                <span class="text-[10px] font-black uppercase tracking-widest">Reserva Legal Ativa</span>
-                            </div>
+                        <div class="glass p-4 border-t-2 border-blue-500">
+                            <i data-lucide="cpu" class="text-blue-500 mb-2"></i>
+                            <p class="font-bold">IA Rural</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pilares" class="mb-32">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass p-8 hover:-translate-y-2 transition-all">
-                    <i data-lucide="leaf" class="text-green-500 mb-6 w-10 h-10"></i>
-                    <h3 class="text-xl font-bold mb-3">Sustentabilidade</h3>
-                    <p class="text-sm opacity-60">Foco na regeneração e no uso de bioinsumos naturais.</p>
-                </div>
-                <div class="glass p-8 border-t-4 border-blue-500/30 hover:-translate-y-2 transition-all">
-                    <i data-lucide="trending-up" class="text-blue-500 mb-6 w-10 h-10"></i>
-                    <h3 class="text-xl font-bold mb-3">Produtividade</h3>
-                    <p class="text-sm opacity-60">Otimização de safras com tecnologia 5.0.</p>
-                </div>
-                <div class="glass p-8 hover:-translate-y-2 transition-all">
-                    <i data-lucide="cpu" class="text-purple-500 mb-6 w-10 h-10"></i>
-                    <h3 class="text-xl font-bold mb-3">Tecnologia</h3>
-                    <p class="text-sm opacity-60">Monitoramento preditivo e inteligência geoespacial.</p>
                 </div>
             </div>
         </section>
 
         <section id="evolucao" class="mb-32">
-            <h2 class="text-center text-3xl font-bold mb-16 uppercase tracking-widest">Evolução do Campo</h2>
+            <h2 class="text-center text-4xl font-black mb-20 uppercase tracking-tighter" data-aos="zoom-in">Jornada da Inovação</h2>
             <div class="relative max-w-4xl mx-auto timeline-line">
-                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8">
-                    <div class="md:w-5/12 w-full glass p-6 order-2 md:order-1 border-green-500/10">
-                        <span class="text-green-500 font-bold text-xs">ONTEM</span>
-                        <h4 class="font-bold text-lg mb-2">Agricultura Manual</h4>
-                        <p class="text-sm opacity-70 italic">Trabalho braçal com alta dependência do clima.</p>
+                
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8" data-aos="fade-right">
+                    <div class="md:w-5/12 w-full glass p-6 border-green-500/20">
+                        <span class="text-green-500 font-bold text-xs">PASSADO</span>
+                        <h4 class="font-bold text-xl mb-2">Trabalho Braçal</h4>
+                        <p class="text-sm opacity-70">Dependência total das estações e processos manuais com alto desperdício.</p>
                     </div>
-                    <div class="z-20 bg-green-500 w-10 h-10 rounded-full order-1 flex items-center justify-center shadow-lg shadow-green-500/50">
-                        <i data-lucide="hand" class="w-5 h-5 text-white"></i>
+                    <div class="z-20 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="clock" class="text-white w-6 h-6"></i>
                     </div>
-                    <div class="md:w-5/12 hidden md:block order-3"></div>
-                </div>
-                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8">
                     <div class="md:w-5/12 hidden md:block"></div>
-                    <div class="z-20 bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/50">
-                        <i data-lucide="satellite" class="w-5 h-5 text-white"></i>
-                    </div>
-                    <div class="md:w-5/12 w-full glass p-6 border-blue-500/10">
-                        <span class="text-blue-500 font-bold text-xs">HOJE</span>
-                        <h4 class="font-bold text-lg mb-2">Agricultura 4.0</h4>
-                        <p class="text-sm opacity-70 italic">Conectividade e máquinas autônomas.</p>
-                    </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="sazonal" class="mb-32">
-            <div class="glass p-8 bg-gradient-to-br from-green-500/5 to-transparent">
-                <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-                    <h2 class="text-2xl font-bold">Bio-Sazonal 📅</h2>
-                    <div id="mesDisplay" class="px-8 py-2 bg-green-500 text-white rounded-full font-bold shadow-lg shadow-green-500/20">Carregando...</div>
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8" data-aos="fade-left">
+                    <div class="md:w-5/12 hidden md:block"></div>
+                    <div class="z-20 bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="satellite" class="text-white w-6 h-6"></i>
+                    </div>
+                    <div class="md:w-5/12 w-full glass p-6 border-blue-500/20">
+                        <span class="text-blue-500 font-bold text-xs">AGORA (2026)</span>
+                        <h4 class="font-bold text-xl mb-2">Conectividade 5.0</h4>
+                        <p class="text-sm opacity-70">Drones, IoT e agricultura de precisão integrada aos biomas em tempo real.</p>
+                    </div>
                 </div>
-                <div id="calendarGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+                <div class="mb-12 flex justify-between items-center w-full md:flex-row flex-col gap-8" data-aos="fade-right">
+                    <div class="md:w-5/12 w-full glass p-6 border-purple-500/30 bg-purple-500/5">
+                        <span class="text-purple-500 font-bold text-xs">FUTURO (2030+)</span>
+                        <h4 class="font-bold text-xl mb-2">Ecossistema Autônomo</h4>
+                        <p class="text-sm opacity-70">Tratores a hidrogênio, fazendas verticais e restauração de biomas guiada por IA.</p>
+                    </div>
+                    <div class="z-20 bg-purple-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                        <i data-lucide="zap" class="text-white w-6 h-6"></i>
+                    </div>
+                    <div class="md:w-5/12 hidden md:block"></div>
+                </div>
             </div>
         </section>
 
     </main>
 
     <footer class="bg-black/20 border-t border-white/5 py-12 text-center text-[10px] opacity-40 uppercase tracking-[0.3em]">
-        Agrinho 2026 • O Campo e a Cidade Unidos pela Sustentabilidade
+        Agrinho 2026 • Sustentabilidade em cada clique
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
