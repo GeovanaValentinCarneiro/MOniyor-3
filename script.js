@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Efeito Parallax Dinâmico no Header
     const hero = document.getElementById('hero');
     const layers = document.querySelectorAll('.parallax-layer');
-    
+   
     window.addEventListener('scroll', () => {
         let scroll = window.pageYOffset;
         // Move o background levemente
         hero.style.backgroundPositionY = (scroll * 0.5) + 'px';
-        
+       
         // Move elementos flutuantes em velocidades diferentes
         layers.forEach(layer => {
             layer.style.transform = `translateY(${scroll * 0.3}px)`;
@@ -45,17 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.biome-path').forEach(path => {
         path.addEventListener('click', () => {
             const data = BIOMES[path.dataset.biome];
-            
+           
             // UI Updates
             document.getElementById('placeholderMsg').classList.add('hidden');
             document.getElementById('contentArea').classList.remove('hidden');
-            
+           
             document.getElementById('bName').innerText = data.name;
             document.getElementById('bEmoji').innerText = data.emoji;
             document.getElementById('bProd').innerText = data.prod;
             document.getElementById('bCons').innerText = data.cons;
             document.getElementById('susVal').innerText = data.sus + '%';
-            
+           
             // Animação da Barra
             const fill = document.getElementById('susFill');
             fill.style.width = '0%';
@@ -64,6 +64,26 @@ document.addEventListener('DOMContentLoaded', () => {
             // Troca classe ativa
             document.querySelectorAll('.biome-path').forEach(p => p.classList.remove('active'));
             path.classList.add('active');
+        });
+    });
+
+    // 5. Lógica do Botão Voltar ao Topo
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+        // Exibe o botão se a página for rolada mais de 400 pixels para baixo
+        if (window.scrollY > 400) {
+            backToTopBtn.classList.remove('hidden');
+        } else {
+            backToTopBtn.classList.add('hidden');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        // Faz a rolagem suave até o topo da página
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
     });
 });
