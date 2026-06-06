@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. LÓGICA DO MAPA MODAL (AGULHÃO/MARCADOR SEGURO COM LOCALSTORAGE)
+    // 4. LÓGICA DO MAPA MODAL
     const openMapModalBtn = document.getElementById("openMapModalBtn");
     const closeMapModalBtn = document.getElementById("closeMapModalBtn");
     const locationModal = document.getElementById("locationModal");
@@ -49,25 +49,51 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalMapWrapper = document.getElementById("modalMapWrapper");
     const pinContainer = document.getElementById("pinContainer");
 
-    // Função interna para renderizar o alfinete na tela nas posições calculadas
-    const drawPinOnMap = (percentX, percentY) => {
-        pinContainer.innerHTML = ''; // Limpa o marcador anterior
-        const pin = document.createElement("div");
-        pin.innerText = "📌";
-        pin.className = "marker-pin";
-        pin.style.left = `${percentX}%`;
-        pin.style.top = `${percentY}%`;
-        pinContainer.appendChild(pin);
+    // Alfinetes simulados de outros estudantes
+    const ghostPins = [
+        { x: 32, y: 24 }, // Ponto na Amazônia (Norte)
+        { x: 80, y: 36 }, // Ponto na Caatinga (Nordeste)
+        { x: 60, y: 48 }, // Ponto no Cerrado (Centro-Oeste)
+        { x: 68, y: 64 }, // Ponto na Mata Atlântica (Sudeste)
+        { x: 52, y: 80 }  // Ponto no Pampa (Sul)
+    ];
+
+    // Função central para desenhar todos os alfinetes na tela
+    const renderAllPins = () => {
+        pinContainer.innerHTML = ''; 
+
+        // Desenhar alfinetes fantasmas (Outros participantes)
+        ghostPins.forEach(p => {
+            const pin = document.createElement("div");
+            pin.innerText = "📌";
+            pin.className = "marker-pin opacity-60 scale-90"; 
+            pin.style.left = `${p.x}%`;
+            pin.style.top = `${p.y}%`;
+            pinContainer.appendChild(pin);
+        });
+
+        // Procurar e desenhar o alfinete real salvo pelo usuário
+        const savedCoordinates = localStorage.getItem("agrinhoUserLocation");
+        if (savedCoordinates) {
+            const coords = JSON.parse(savedCoordinates);
+            const userPin = document.createElement("div");
+            userPin.innerText = "📍"; 
+            userPin.className = "marker-pin z-10 animate-bounce"; 
+            userPin.style.left = `${coords.x}%`;
+            userPin.style.top = `${coords.y}%`;
+
+            const badge = document.createElement("span");
+            badge.innerText = "Você";
+            badge.className = "absolute -top-5 left-1/2 -translate-x-1/2 bg-green-500 text-white text-[9px] px-1 rounded font-bold uppercase tracking-wide shadow-md";
+            userPin.appendChild(badge);
+
+            pinContainer.appendChild(userPin);
+        }
     };
 
-    // Tenta carregar uma localização salva anteriormente ao iniciar o site
-    const savedCoordinates = localStorage.getItem("agrinhoUserLocation");
-    if (savedCoordinates) {
-        const coords = JSON.parse(savedCoordinates);
-        drawPinOnMap(coords.x, coords.y);
-    }
+    renderAllPins();
 
-    // Abrir Modal
+    // Abrir e Fechar Modal
     openMapModalBtn.addEventListener("click", () => {
         locationModal.classList.remove("hidden");
         setTimeout(() => {
@@ -76,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 10);
     });
 
-    // Fechar Modal
     const closeModal = () => {
         locationModal.classList.add("opacity-0");
         modalContent.classList.add("scale-95");
@@ -86,31 +111,30 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     closeMapModalBtn.addEventListener("click", closeModal);
-    
     locationModal.addEventListener("click", (e) => {
         if (e.target === locationModal) closeModal();
     });
 
-    // Colocar o alfinete e salvar dados de forma autônoma
+    // 🛑 AQUI ESTÁ A LÓGICA ATUALIZADA COM O CLAMPING NAS BORDAS
     modalMapWrapper.addEventListener("click", (e) => {
         if (e.target.tagName.toLowerCase() !== 'path') return;
 
         const rect = modalMapWrapper.getBoundingClientRect();
         
-        // Calcular posição relativa em pixel
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Converter posição para porcentagem para manter a responsividade estrutural
-        const percentX = (x / rect.width) * 100;
-        const percentY = (y / rect.height) * 100;
+        let percentX = (x / rect.width) * 100;
+        let percentY = (y / rect.height) * 100;
 
-        // Salva as variáveis no localStorage de forma persistente (Critério Nível 4)
-        const locationData = { x: percentX, y: percentY };
-        localStorage.setItem("agrinhoUserLocation", JSON.stringify(locationData));
+        // Limita as coordenadas para o alfinete não vazar da caixa invisível
+        percentX = Math.max(5, Math.min(90, percentX));
+        percentY = Math.max(10, Math.min(95, percentY));
 
-        // Renderiza o marcador gráfico na tela
-        drawPinOnMap(percentX, percentY);
+        const userLocation = { x: percentX, y: percentY };
+        localStorage.setItem("agrinhoUserLocation", JSON.stringify(userLocation));
+
+        renderAllPins();
     });
 
     // 5. ANIMAR CONTADORES DE IMPACTO
@@ -148,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 6. DARK / LIGHT MODE (TÓPICO ROBUSTO COM ICONES FIXOS)
+    // 6. DARK / LIGHT MODE
     const darkToggle = document.getElementById("darkToggle");
     const iconMoon = document.getElementById("iconMoon");
     const iconSun = document.getElementById("iconSun");
