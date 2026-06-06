@@ -1,3 +1,4 @@
+/* === ESCOPO DE CORES E VARIÁVEIS BASE === */
 :root {
     --bg: #05080f;
     --card: rgba(15, 23, 42, 0.7);
@@ -6,20 +7,44 @@
     --text: #f8fafc;
 }
 
+/* === MODO CLARO SUAVE === */
 body.light-mode {
-    --bg: #f8fafc;
-    --card: rgba(255, 255, 255, 0.8);
-    --border: rgba(22, 163, 74, 0.1);
-    --primary: #16a34a;
-    --text: #0f172a;
+    --bg: #e2e8f0; 
+    --card: rgba(255, 255, 255, 0.65); 
+    --border: rgba(22, 163, 74, 0.25); 
+    --primary: #15803d; 
+    --text: #334155; 
 }
 
+/* Correções de contraste automáticas para o Modo Claro */
+body.light-mode .bg-white\/5 { background-color: rgba(0, 0, 0, 0.04); }
+body.light-mode .border-white\/5,
+body.light-mode .border-white\/10 { border-color: rgba(0, 0, 0, 0.08); }
+body.light-mode .opacity-70 { opacity: 0.85; }
+body.light-mode .bg-black\/20 { background-color: rgba(0, 0, 0, 0.05); }
+
+/* === ESTRUTURA GLOBAL === */
 body {
     background-color: var(--bg);
     color: var(--text);
     font-family: 'Plus Jakarta Sans', sans-serif;
     scroll-behavior: smooth;
-    transition: background 0.5s ease;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #16a34a;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #15803d;
 }
 
 .glass {
@@ -33,26 +58,66 @@ body {
 .hero-pattern {
     background-image: radial-gradient(circle at 2px 2px, var(--border) 1px, transparent 0);
     background-size: 40px 40px;
-    background-attachment: fixed; /* Fallback parallax */
+    background-attachment: fixed;
 }
 
-/* Biomas */
+/* === MAPA INTERATIVO: BIOMAS === */
 .biome-path {
-    fill: rgba(34, 197, 94, 0.05);
-    stroke: var(--primary);
-    stroke-width: 1;
+    fill: rgba(255, 255, 255, 0.01); /* Quase transparente por padrão */
+    stroke-width: 1.5;
     transition: all 0.4s ease;
     cursor: pointer;
 }
 
-.biome-path:hover, .biome-path.active {
-    fill: var(--primary);
-    fill-opacity: 0.3;
-    stroke-width: 2.5;
-    filter: drop-shadow(0 0 10px var(--primary));
+/* Amazônia - Verde */
+.biome-path[data-biome="amazonia"] { stroke: #22c55e; }
+.biome-path[data-biome="amazonia"]:hover, .biome-path[data-biome="amazonia"].active { 
+    fill: #22c55e; 
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5)); 
+    stroke-width: 2.5; 
 }
 
-/* Timeline */
+/* Cerrado - Roxo */
+.biome-path[data-biome="cerrado"] { stroke: #a855f7; }
+.biome-path[data-biome="cerrado"]:hover, .biome-path[data-biome="cerrado"].active { 
+    fill: #a855f7; 
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); 
+    stroke-width: 2.5; 
+}
+
+/* Pantanal - Azul */
+.biome-path[data-biome="pantanal"] { stroke: #3b82f6; }
+.biome-path[data-biome="pantanal"]:hover, .biome-path[data-biome="pantanal"].active { 
+    fill: #3b82f6; 
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); 
+    stroke-width: 2.5; 
+}
+
+/* Caatinga - Laranja */
+.biome-path[data-biome="caatinga"] { stroke: #f97316; }
+.biome-path[data-biome="caatinga"]:hover, .biome-path[data-biome="caatinga"].active { 
+    fill: #f97316; 
+    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.5)); 
+    stroke-width: 2.5; 
+}
+
+/* Mata Atlântica - Amarelo */
+.biome-path[data-biome="mata_atlantica"] { stroke: #eab308; }
+.biome-path[data-biome="mata_atlantica"]:hover, .biome-path[data-biome="mata_atlantica"].active { 
+    fill: #eab308; 
+    filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); 
+    stroke-width: 2.5; 
+}
+
+/* Pampa - Vermelho */
+.biome-path[data-biome="pampa"] { stroke: #ef4444; }
+.biome-path[data-biome="pampa"]:hover, .biome-path[data-biome="pampa"].active { 
+    fill: #ef4444; 
+    filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); 
+    stroke-width: 2.5; 
+}
+
+/* === TIMELINE & COMPONENTES EXTRA === */
 .timeline-line::before {
     content: '';
     position: absolute;
@@ -61,6 +126,7 @@ body {
     width: 2px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e, #3b82f6, #a855f7);
+    z-index: 1;
 }
 
 .progress-bar {
@@ -70,8 +136,13 @@ body {
     overflow: hidden;
 }
 
+body.light-mode .progress-bar {
+    background: rgba(0, 0, 0, 0.1); 
+}
+
 #susFill { transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
 
 @media (max-width: 768px) {
     .timeline-line::before { left: 24px; }
-} 
+}
+
