@@ -140,11 +140,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 6. DARK / LIGHT MODE
     const darkToggle = document.getElementById("darkToggle");
+    const iconMoon = document.getElementById("iconMoon");
+    const iconSun = document.getElementById("iconSun");
+
     darkToggle.addEventListener("click", () => {
         document.body.classList.toggle("light-mode");
         const isLight = document.body.classList.contains("light-mode");
-        darkToggle.innerHTML = isLight ? '<i data-lucide="sun" class="w-4 h-4 pointer-events-none"></i>' : '<i data-lucide="moon" class="w-4 h-4 pointer-events-none"></i>';
-        lucide.createIcons();
+        
+        if (isLight) {
+            iconMoon.classList.add("hidden");
+            iconSun.classList.remove("hidden");
+        } else {
+            iconMoon.classList.remove("hidden");
+            iconSun.classList.add("hidden");
+        }
     });
 
     // 7. BOTÃO VOLTAR AO TOPO
