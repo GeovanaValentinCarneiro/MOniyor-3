@@ -58,7 +58,7 @@ body {
     background-attachment: fixed;
 }
 
-/* === MAPA INTERATIVO: BIOMAS === */
+/* === MAPA INTERATIVO: BIOMAS (Monitor) === */
 .biome-path {
     stroke-width: 1.5;
     transition: all 0.4s ease;
@@ -67,47 +67,66 @@ body {
 
 .biome-path[data-biome="amazonia"] { stroke: #22c55e; fill: rgba(34, 197, 94, 0.08); }
 .biome-path[data-biome="amazonia"]:hover, .biome-path[data-biome="amazonia"].active { 
-    fill: #22c55e; 
-    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #22c55e; filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5)); stroke-width: 2.5; 
 }
 
 .biome-path[data-biome="cerrado"] { stroke: #a855f7; fill: rgba(168, 85, 247, 0.08); }
 .biome-path[data-biome="cerrado"]:hover, .biome-path[data-biome="cerrado"].active { 
-    fill: #a855f7; 
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #a855f7; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); stroke-width: 2.5; 
 }
 
 .biome-path[data-biome="pantanal"] { stroke: #3b82f6; fill: rgba(59, 130, 246, 0.08); }
 .biome-path[data-biome="pantanal"]:hover, .biome-path[data-biome="pantanal"].active { 
-    fill: #3b82f6; 
-    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #3b82f6; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); stroke-width: 2.5; 
 }
 
 .biome-path[data-biome="caatinga"] { stroke: #f97316; fill: rgba(249, 115, 22, 0.08); }
 .biome-path[data-biome="caatinga"]:hover, .biome-path[data-biome="caatinga"].active { 
-    fill: #f97316; 
-    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #f97316; filter: drop-shadow(0 0 10px rgba(249, 115, 22, 0.5)); stroke-width: 2.5; 
 }
 
 .biome-path[data-biome="mata_atlantica"] { stroke: #eab308; fill: rgba(234, 179, 8, 0.08); }
 .biome-path[data-biome="mata_atlantica"]:hover, .biome-path[data-biome="mata_atlantica"].active { 
-    fill: #eab308; 
-    filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #eab308; filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); stroke-width: 2.5; 
 }
 
 .biome-path[data-biome="pampa"] { stroke: #ef4444; fill: rgba(239, 68, 68, 0.08); }
 .biome-path[data-biome="pampa"]:hover, .biome-path[data-biome="pampa"].active { 
-    fill: #ef4444; 
-    filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); 
-    stroke-width: 2.5; 
+    fill: #ef4444; filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); stroke-width: 2.5; 
 }
 
-/* === TIMELINE CORRIGIDA === */
+/* === MODAL MAPA COLORIDO === */
+/* Cursor de agulhão APENAS quando hover em cima dos paths (biomas) */
+.colored-map path {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px;"><text y="24">📌</text></svg>') 8 24, crosshair;
+    transition: filter 0.3s ease;
+}
+
+.colored-map path:hover {
+    filter: brightness(1.15) drop-shadow(0 0 8px rgba(255,255,255,0.2));
+}
+
+.colored-map path[data-biome="amazonia"] { fill: #22c55e; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+.colored-map path[data-biome="cerrado"] { fill: #a855f7; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+.colored-map path[data-biome="pantanal"] { fill: #3b82f6; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+.colored-map path[data-biome="caatinga"] { fill: #f97316; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+.colored-map path[data-biome="mata_atlantica"] { fill: #eab308; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+.colored-map path[data-biome="pampa"] { fill: #ef4444; stroke: rgba(255,255,255,0.2); stroke-width: 1; }
+
+.marker-pin {
+    position: absolute;
+    font-size: 28px;
+    transform: translate(-30%, -90%);
+    filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.5));
+    animation: dropIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes dropIn {
+    0% { transform: translate(-30%, -200%) scale(0); opacity: 0; }
+    100% { transform: translate(-30%, -90%) scale(1); opacity: 1; }
+}
+
+/* === TIMELINE === */
 .timeline-line::before {
     content: '';
     position: absolute;
@@ -116,7 +135,7 @@ body {
     width: 2px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e, #3b82f6, #a855f7);
-    z-index: 10; /* Mantém a linha sob os círculos */
+    z-index: 10;
 }
 
 .progress-bar {
@@ -126,10 +145,7 @@ body {
     overflow: hidden;
 }
 
-body.light-mode .progress-bar {
-    background: rgba(0, 0, 0, 0.1); 
-}
-
+body.light-mode .progress-bar { background: rgba(0, 0, 0, 0.1); }
 #susFill { transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1); }
 
 @media (max-width: 768px) {

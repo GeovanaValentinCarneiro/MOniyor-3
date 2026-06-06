@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // 1. INICIALIZAÇÃO DE ICONS E ANIMAÇÕES
+    // 1. INICIALIZAÇÃO
     lucide.createIcons();
     AOS.init({ duration: 1000, once: true });
 
-    // 2. ESTRUTURA DE DADOS DOS BIOMAS ORIGINAL
+    // 2. DADOS DOS BIOMAS
     const biomeData = {
         amazonia: { name: "Amazônia", emoji: "🌳", prod: "Sistemas agroflorestais extrativistas de impacto nulo.", tech: "Drones de monitoramento ultra-espectral contra incêndios.", sus: 98 },
         cerrado: { name: "Cerrado", emoji: "🌾", prod: "Grãos de alta performance com plantio direto no solo.", tech: "Sensores IoT subterrâneos de controle hídrico.", sus: 85 },
@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
         pampa: { name: "Pampa", emoji: "🐎", prod: "Manejo de pastagem rotativa preservando o campo nativo.", tech: "Softwares inteligentes de gerenciamento pecuário.", sus: 94 }
     };
 
-    // 3. INTERATIVIDADE DO MAPA DE BIOMAS
-    const paths = document.querySelectorAll(".biome-path");
+    // 3. INTERATIVIDADE DO MONITOR DE BIOMAS
+    const paths = document.querySelectorAll("#monitor .biome-path");
     const placeholder = document.getElementById("placeholderMsg");
     const content = document.getElementById("contentArea");
 
@@ -41,7 +41,69 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. ANIMAR CONTADORES DE IMPACTO
+    // 4. LÓGICA DO MAPA MODAL (AGULHÃO/MARCADOR EXCLUSIVO NO MAPA)
+    const openMapModalBtn = document.getElementById("openMapModalBtn");
+    const closeMapModalBtn = document.getElementById("closeMapModalBtn");
+    const locationModal = document.getElementById("locationModal");
+    const modalContent = document.getElementById("modalContent");
+    const modalMapWrapper = document.getElementById("modalMapWrapper");
+    const pinContainer = document.getElementById("pinContainer");
+
+    // Abrir Modal
+    openMapModalBtn.addEventListener("click", () => {
+        locationModal.classList.remove("hidden");
+        setTimeout(() => {
+            locationModal.classList.remove("opacity-0");
+            modalContent.classList.remove("scale-95");
+        }, 10);
+    });
+
+    // Fechar Modal
+    const closeModal = () => {
+        locationModal.classList.add("opacity-0");
+        modalContent.classList.add("scale-95");
+        setTimeout(() => {
+            locationModal.classList.add("hidden");
+        }, 300);
+    };
+
+    closeMapModalBtn.addEventListener("click", closeModal);
+    
+    locationModal.addEventListener("click", (e) => {
+        if (e.target === locationModal) closeModal();
+    });
+
+    // Colocar o agulhão ao clicar EXCLUSIVAMENTE nas áreas do mapa (paths)
+    modalMapWrapper.addEventListener("click", (e) => {
+        
+        // Verifica se o elemento clicado é um 'path' do SVG (uma área de bioma)
+        // Se clicar na água ou espaço vazio ao redor, a função para aqui
+        if (e.target.tagName.toLowerCase() !== 'path') return;
+
+        const rect = modalMapWrapper.getBoundingClientRect();
+        
+        // Calcular posição relativa
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Converter para porcentagem
+        const percentX = (x / rect.width) * 100;
+        const percentY = (y / rect.height) * 100;
+
+        // Limpar agulhão anterior
+        pinContainer.innerHTML = '';
+
+        // Criar o agulhão novo
+        const pin = document.createElement("div");
+        pin.innerText = "📌";
+        pin.className = "marker-pin";
+        pin.style.left = `${percentX}%`;
+        pin.style.top = `${percentY}%`;
+
+        pinContainer.appendChild(pin);
+    });
+
+    // 5. ANIMAR CONTADORES DE IMPACTO
     const counters = document.querySelectorAll(".counter");
     const speed = 40;
 
@@ -76,16 +138,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 5. GERENCIADOR DE DARK / LIGHT MODE
+    // 6. DARK / LIGHT MODE
     const darkToggle = document.getElementById("darkToggle");
     darkToggle.addEventListener("click", () => {
         document.body.classList.toggle("light-mode");
         const isLight = document.body.classList.contains("light-mode");
-        darkToggle.innerHTML = isLight ? '<i data-lucide="sun" class="w-4 h-4"></i>' : '<i data-lucide="moon" class="w-4 h-4"></i>';
+        darkToggle.innerHTML = isLight ? '<i data-lucide="sun" class="w-4 h-4 pointer-events-none"></i>' : '<i data-lucide="moon" class="w-4 h-4 pointer-events-none"></i>';
         lucide.createIcons();
     });
 
-    // 6. BOTÃO VOLTAR AO TOPO
+    // 7. BOTÃO VOLTAR AO TOPO
     const backToTop = document.getElementById("backToTop");
     window.addEventListener("scroll", () => {
         if (window.scrollY > 400) {
