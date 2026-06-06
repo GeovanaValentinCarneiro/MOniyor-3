@@ -1,11 +1,10 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     
     // 1. INICIALIZAÇÃO DE ICONS E ANIMAÇÕES
     lucide.createIcons();
     AOS.init({ duration: 1000, once: true });
 
-    // 2. ESTRUTURA DE DADOS DOS BIOMAS
+    // 2. ESTRUTURA DE DADOS DOS BIOMAS ORIGINAL
     const biomeData = {
         amazonia: { name: "Amazônia", emoji: "🌳", prod: "Sistemas agroflorestais extrativistas de impacto nulo.", tech: "Drones de monitoramento ultra-espectral contra incêndios.", sus: 98 },
         cerrado: { name: "Cerrado", emoji: "🌾", prod: "Grãos de alta performance com plantio direto no solo.", tech: "Sensores IoT subterrâneos de controle hídrico.", sus: 85 },
@@ -48,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startCounters = () => {
         counters.forEach(counter => {
+            counter.innerText = "0"; 
             const updateCount = () => {
                 const target = +counter.getAttribute("data-target");
                 const count = +counter.innerText;
@@ -64,13 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Trigger dos contadores ao rolar a página
     const impactSection = document.getElementById("impacto");
     let animated = false;
     window.addEventListener("scroll", () => {
         if (impactSection) {
             const rect = impactSection.getBoundingClientRect();
-            if (rect.top < window.innerHeight && !animated) {
+            if (rect.top < (window.innerHeight - 100) && !animated) {
                 startCounters();
                 animated = true;
             }
