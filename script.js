@@ -41,13 +41,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. LÓGICA DO MAPA MODAL (AGULHÃO/MARCADOR EXCLUSIVO NO MAPA)
+    // 4. LÓGICA DO MAPA MODAL (AGULHÃO/MARCADOR SEGURO COM LOCALSTORAGE)
     const openMapModalBtn = document.getElementById("openMapModalBtn");
     const closeMapModalBtn = document.getElementById("closeMapModalBtn");
     const locationModal = document.getElementById("locationModal");
     const modalContent = document.getElementById("modalContent");
     const modalMapWrapper = document.getElementById("modalMapWrapper");
     const pinContainer = document.getElementById("pinContainer");
+
+    // Função interna para renderizar o alfinete na tela nas posições calculadas
+    const drawPinOnMap = (percentX, percentY) => {
+        pinContainer.innerHTML = ''; // Limpa o marcador anterior
+        const pin = document.createElement("div");
+        pin.innerText = "📌";
+        pin.className = "marker-pin";
+        pin.style.left = `${percentX}%`;
+        pin.style.top = `${percentY}%`;
+        pinContainer.appendChild(pin);
+    };
+
+    // Tenta carregar uma localização salva anteriormente ao iniciar o site
+    const savedCoordinates = localStorage.getItem("agrinhoUserLocation");
+    if (savedCoordinates) {
+        const coords = JSON.parse(savedCoordinates);
+        drawPinOnMap(coords.x, coords.y);
+    }
 
     // Abrir Modal
     openMapModalBtn.addEventListener("click", () => {
@@ -73,34 +91,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === locationModal) closeModal();
     });
 
-    // Colocar o agulhão ao clicar EXCLUSIVAMENTE nas áreas do mapa (paths)
+    // Colocar o alfinete e salvar dados de forma autônoma
     modalMapWrapper.addEventListener("click", (e) => {
-        
-        // Verifica se o elemento clicado é um 'path' do SVG (uma área de bioma)
-        // Se clicar na água ou espaço vazio ao redor, a função para aqui
         if (e.target.tagName.toLowerCase() !== 'path') return;
 
         const rect = modalMapWrapper.getBoundingClientRect();
         
-        // Calcular posição relativa
+        // Calcular posição relativa em pixel
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Converter para porcentagem
+        // Converter posição para porcentagem para manter a responsividade estrutural
         const percentX = (x / rect.width) * 100;
         const percentY = (y / rect.height) * 100;
 
-        // Limpar agulhão anterior
-        pinContainer.innerHTML = '';
+        // Salva as variáveis no localStorage de forma persistente (Critério Nível 4)
+        const locationData = { x: percentX, y: percentY };
+        localStorage.setItem("agrinhoUserLocation", JSON.stringify(locationData));
 
-        // Criar o agulhão novo
-        const pin = document.createElement("div");
-        pin.innerText = "📌";
-        pin.className = "marker-pin";
-        pin.style.left = `${percentX}%`;
-        pin.style.top = `${percentY}%`;
-
-        pinContainer.appendChild(pin);
+        // Renderiza o marcador gráfico na tela
+        drawPinOnMap(percentX, percentY);
     });
 
     // 5. ANIMAR CONTADORES DE IMPACTO
@@ -138,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // 6. DARK / LIGHT MODE
+    // 6. DARK / LIGHT MODE (TÓPICO ROBUSTO COM ICONES FIXOS)
     const darkToggle = document.getElementById("darkToggle");
     const iconMoon = document.getElementById("iconMoon");
     const iconSun = document.getElementById("iconSun");
