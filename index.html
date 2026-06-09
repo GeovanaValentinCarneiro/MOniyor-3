@@ -12,12 +12,44 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos auxiliares para os efeitos glass e transições */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px border rgba(255, 255, 255, 0.08);
+        }
+        .biome-path {
+            fill: rgba(255, 255, 255, 0.1);
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 1.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .biome-path:hover, .biome-path.active {
+            fill: rgba(34, 197, 94, 0.3);
+            stroke: #22c55e;
+        }
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f17;
+            color: #f3f4f6;
+        }
+    </style>
 </head>
 <body class="antialiased overflow-x-hidden">
 
     <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-center">
         <div class="glass px-6 py-2 flex items-center gap-6 text-[10px] uppercase font-bold tracking-widest flex-wrap justify-center relative">
             <a href="#monitor" class="hover:text-green-500 transition-all duration-300 hover:scale-110 active:scale-95">Monitor</a>
+            <a href="#ecossistema" class="hover:text-green-500 transition-all duration-300 hover:scale-110 active:scale-95">Ecossistema</a>
             <a href="#equilibrio" class="hover:text-green-500 transition-all duration-300 hover:scale-110 active:scale-95">Equilíbrio</a>
             <a href="#solucoes" class="hover:text-green-500 transition-all duration-300 hover:scale-110 active:scale-95">Tecnologias</a>
             <a href="#desafios" class="hover:text-green-500 transition-all duration-300 hover:scale-110 active:scale-95">Desafios</a>
@@ -51,10 +83,62 @@
 
     <main class="container mx-auto px-6">
         
+        <section id="ecossistema" class="mb-32">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <span class="text-green-500 font-bold text-xs uppercase tracking-widest">Conexões Vitais</span>
+                <h2 class="text-4xl font-black uppercase tracking-tighter">O Ecossistema do Agro</h2>
+                <p class="text-sm opacity-60 mt-2">Clique em um dos pilares abaixo para expandir as informações na tela.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
+                <div onclick="openCardModal('Solo e Nutrição', 'O solo vivo é o coração da agricultura sustentável. O monitoramento digital avançado mapeia microrganismos benéficos e regula nutrientes em tempo real, garantindo safras ricas sem desgastar a terra ou poluir os lençóis freáticos.')" class="glass p-6 text-center cursor-pointer border border-white/5 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="layers" class="text-amber-500 w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Solo Vivo</h3>
+                    <p class="text-xs opacity-60 line-clamp-2">A base para a fertilidade e preservação biológica da terra.</p>
+                </div>
+
+                <div onclick="openCardModal('Gestão de Recursos Hídricos', 'A água é preciosa. Sensores de umidade subterrâneos combinados com previsões via satélite entregam irrigação de precisão gota a gota. Isso reduz o desperdício hídrico em até 45% nas lavouras modernas de 2026.')" class="glass p-6 text-center cursor-pointer border border-white/5 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-blue-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="droplet" class="text-blue-500 w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Água Potável</h3>
+                    <p class="text-xs opacity-60 line-clamp-2">Irrigação inteligente e economia real de recursos hídricos.</p>
+                </div>
+
+                <div onclick="openCardModal('Biodiversidade Protegida', 'A integração entre a mata nativa e as plantações cria corredores ecológicos fundamentais. Esses espaços preservam fauna local, insetos polinizadores e combatem pragas de forma natural, eliminando excessos químicos.')" class="glass p-6 text-center cursor-pointer border border-white/5 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-emerald-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="sprout" class="text-emerald-500 w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Biodiversidade</h3>
+                    <p class="text-xs opacity-60 line-clamp-2">Equilíbrio ecológico trabalhando lado a lado com a produção.</p>
+                </div>
+
+                <div onclick="openCardModal('Clima e Atmosfera', 'Estações meteorológicas hiperlocais conectadas à inteligência artificial prevêem variações microclimáticas bruscas. O produtor pode blindar sua plantação e ajustar o manejo de forma ágil e segura.')" class="glass p-6 text-center cursor-pointer border border-white/5 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 bg-purple-500/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="cloud-sun" class="text-purple-500 w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Monitoramento</h3>
+                    <p class="text-xs opacity-60 line-clamp-2">Inteligência climática baseada em previsões por IA e satélite.</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="agroCardModal" class="fixed inset-0 z-[120] hidden flex items-center justify-center bg-black/80 backdrop-blur-md transition-opacity duration-300">
+            <div class="bg-[#0f141c] border border-white/10 p-8 max-w-lg w-full mx-4 relative shadow-2xl rounded-none transform scale-95 transition-transform duration-300" id="agroModalContent">
+                <button onclick="closeCardModal()" class="absolute top-4 right-4 p-2 text-neutral-400 hover:text-red-500 transition-all">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <h3 id="agroModalTitle" class="text-2xl font-black text-green-400 mb-4 uppercase tracking-tight"></h3>
+                <p id="agroModalText" class="text-base opacity-80 leading-relaxed text-neutral-200"></p>
+            </div>
+        </div>
+        
         <div id="monitor" class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-32" data-aos="fade-up">
-            <div class="lg:col-span-7 glass p-8 shadow-2xl relative">
+            <div class="lg:col-span-7 glass p-8 shadow-2xl relative overflow-hidden flex flex-col justify-between">
                 
-                <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center justify-between mb-8 relative z-10">
                     <h2 class="text-2xl font-bold">Monitor de Biomas</h2>
                     
                     <div class="relative group">
@@ -67,16 +151,18 @@
                     </div>
                 </div>
 
-                <svg viewBox="250 180 250 250" class="w-full h-auto max-h-[500px]">
-                    <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
-                    <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
-                    <path class="biome-path" data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
-                    <path class="biome-path" data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
-                    <path class="biome-path" data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
-                    <path class="biome-path" data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
-                </svg>
+                <div class="flex-grow flex items-center justify-center my-4">
+                    <svg viewBox="250 180 250 250" class="w-full h-auto max-h-[500px]">
+                        <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
+                        <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
+                        <path class="biome-path" data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
+                        <path class="biome-path" data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
+                        <path class="biome-path" data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
+                        <path class="biome-path" data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
+                    </svg>
+                </div>
 
-                <div class="mt-8 flex flex-wrap gap-4 justify-center text-[10px] uppercase font-bold tracking-wider">
+                <div class="mt-8 flex flex-wrap gap-4 justify-center text-[10px] uppercase font-bold tracking-wider relative z-10">
                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background: #22c55e;"></span> Amazônia</div>
                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background: #a855f7;"></span> Cerrado</div>
                     <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background: #3b82f6;"></span> Pantanal</div>
@@ -92,58 +178,85 @@
                         <i data-lucide="info" class="w-12 h-12 mb-4"></i>
                         <p>Toque em um bioma no mapa para analisar dados.</p>
                     </div>
-                    <div id="contentArea" class="hidden">
-                        <div class="flex items-center gap-4 mb-6">
-                            <span id="bEmoji" class="text-5xl p-4 bg-green-500/10 rounded-2xl"></span>
-                            <div>
-                                <h3 id="bName" class="text-3xl font-black text-green-500"></h3>
-                                <p class="text-sm opacity-60">Status do Ecossistema</p>
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                                <span class="text-[10px] font-bold uppercase text-green-400">Produção Sustentável</span>
-                                <p id="bProd" class="mt-1 font-medium"></p>
-                            </div>
-                            <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                                <span class="text-[10px] font-bold uppercase text-blue-400">Tecnologia Aplicada</span>
-                                <p id="bCons" class="mt-1 font-medium"></p>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-2 font-bold uppercase text-[10px]">
-                                    <span>Índice Bio-Digital</span>
-                                    <span id="susVal" class="text-green-500">0%</span>
+                    
+                    <div id="contentArea" class="hidden h-full">
+                        <div class="flex flex-col h-full">
+                            
+                            <div class="flex items-center gap-4 mb-6">
+                                <span id="bEmoji" class="text-5xl p-4 bg-green-500/10 rounded-2xl"></span>
+                                <div>
+                                    <h3 id="bName" class="text-3xl font-black text-green-500"></h3>
+                                    <p class="text-sm opacity-60">Status do Ecossistema</p>
                                 </div>
-                                <div class="progress-bar"><div id="susFill" class="h-full bg-green-500 transition-all duration-500" style="width: 0%"></div></div>
                             </div>
+                            
+                            <div class="space-y-4">
+                                <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                    <span class="text-[10px] font-bold uppercase text-green-400">Produção Sustentável</span>
+                                    <p id="bProd" class="mt-1 font-medium"></p>
+                                </div>
+                                <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                                    <span class="text-[10px] font-bold uppercase text-blue-400">Tecnologia Aplicada</span>
+                                    <p id="bCons" class="mt-1 font-medium"></p>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-2 font-bold uppercase text-[10px]">
+                                        <span>Índice Bio-Digital</span>
+                                        <span id="susVal" class="text-green-500">0%</span>
+                                    </div>
+                                    <div class="progress-bar"><div id="susFill" class="h-full bg-green-500 transition-all duration-500" style="width: 0%"></div></div>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto pt-8">
+                                <div class="p-5 bg-green-500/10 rounded-2xl border border-green-500/20 text-center relative overflow-hidden transition-all duration-300 hover:bg-green-500/20">
+                                    <div class="flex justify-center mb-2">
+                                        <i data-lucide="leaf" class="text-green-500 w-5 h-5"></i>
+                                    </div>
+                                    <p class="text-[10px] font-bold uppercase tracking-widest text-green-500 mb-1">Visão Sistêmica 2026</p>
+                                    <p class="text-[13px] opacity-80 leading-relaxed">A preservação de cada bioma é vital para garantir a estabilidade climática e fortalecer a produtividade de todo o país.</p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
             </div>
         </div>
 
-        <section id="equilibrio" class="mb-32">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6" data-aos="fade-right">
-                    <span class="text-green-500 font-bold text-xs uppercase tracking-widest">Filosofia de Production</span>
-                    <h2 class="text-4xl font-black uppercase tracking-tight">Produtividade & <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Preservação</span></h2>
-                    
-                    <div class="p-6 bg-white/5 rounded-2xl border-l-4 border-blue-400 transition-all duration-300 hover:bg-white/10 hover:translate-x-2 shadow-sm">
-                        <h4 class="font-bold text-lg mb-1 flex items-center gap-2"><i data-lucide="shield-alert" class="text-blue-400 w-5 h-5"></i> Interdependência</h4>
-                        <p class="text-sm opacity-70 leading-relaxed">O agro depende diretamente da natureza (chuvas, solo e polinizadores). Preservar é o seu seguro de vida.</p>
-                    </div>
+        <section id="equilibrio" class="mb-32 space-y-16">
+            <div class="text-center mb-6" data-aos="fade-up">
+                <span class="text-green-500 font-bold text-xs uppercase tracking-widest">Coexistência Harmônica</span>
+                <h2 class="text-4xl font-black uppercase tracking-tight">Futuro Sustentável: Produção & Conservação</h2>
+            </div>
 
-                    <div class="p-6 bg-white/5 rounded-2xl border-l-4 border-green-500 transition-all duration-300 hover:bg-white/10 hover:translate-x-2 shadow-sm">
-                        <h4 class="font-bold text-lg mb-1 flex items-center gap-2"><i data-lucide="maximize-2" class="text-green-500 w-5 h-5"></i> Intensificação Sustentável</h4>
-                        <p class="text-sm opacity-70 leading-relaxed">Produzir mais por hectare aumentando a eficiência vertical, sem avançar sobre novas áreas nativas.</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" data-aos="fade-up">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="text-blue-400 w-5 h-5"></i>
+                        <h4 class="font-bold text-xl">Interdependência Direta</h4>
                     </div>
+                    <p class="text-sm opacity-70 leading-relaxed">
+                        O agro moderno depende de recursos naturais intactos, como ciclos regulares de chuva e insetos polinizadores. Preservar o meio ambiente é o verdadeiro seguro de vida para manter o campo produtivo a longo prazo.
+                    </p>
                 </div>
-                
-                <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 h-[380px] bg-neutral-900 group" data-aos="fade-left">
-                    <img src="img/autofarm.jpg" alt="Equilíbrio" class="w-full h-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-8">
-                        <p class="text-xs font-bold uppercase tracking-widest text-green-400 transition-colors duration-300 group-hover:text-green-300">Alta performance lado a lado com a natureza.</p>
+                <div class="relative rounded-none overflow-hidden shadow-2xl border border-white/10 h-[300px] bg-neutral-900">
+                    <img src="img/natureza.jpg" alt="Campo Sustentável e Florestas nativas" class="w-full h-full object-cover opacity-70">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" data-aos="fade-up">
+                <div class="relative rounded-none overflow-hidden shadow-2xl border border-white/10 h-[300px] bg-neutral-900 lg:order-1 order-2">
+                    <img src="img/autofarm.jpg" alt="Tecnologia de Campo Avançada" class="w-full h-full object-cover opacity-70">
+                </div>
+                <div class="space-y-4 lg:order-2 order-1">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="maximize-2" class="text-green-500 w-5 h-5"></i>
+                        <h4 class="font-bold text-xl">Intensificação Inteligente</h4>
                     </div>
+                    <p class="text-sm opacity-70 leading-relaxed">
+                        Produzir mais por hectare usando mapeamento vertical elimina a necessidade de expandir áreas cultivadas sobre florestas. A tecnologia atual assegura alta performance respeitando fronteiras biológicas.
+                    </p>
                 </div>
             </div>
         </section>
@@ -151,23 +264,23 @@
         <section id="solucoes" class="mb-32">
             <div class="text-center mb-16" data-aos="fade-up">
                 <span class="text-blue-500 font-bold text-xs uppercase tracking-widest">Inteligência Operacional</span>
-                <h2 class="text-4xl font-black mt-2 uppercase tracking-tighter">Aplicações Tecnológicas</h2>
+                <h2 class="text-4xl font-black mt-2 uppercase tracking-tighter">Soluções para o Produtor Rural</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-xl hover:shadow-blue-500/5 border-t-4 border-blue-500 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="glass p-8 rounded-none border-t-4 border-blue-500 transition-all duration-300 hover:-translate-y-3 hover:bg-blue-950/20 hover:shadow-xl hover:shadow-blue-500/10 hover:border-blue-400 group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
                     <i data-lucide="bot" class="w-10 h-10 text-blue-500 mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"></i>
                     <h3 class="text-xl font-bold mb-3">Tecnologia de Ponta</h3>
                     <p class="opacity-70 text-sm leading-relaxed">Drones, IA e sensores aplicando água e insumos na quantidade exata, eliminando o desperdício.</p>
                 </div>
                 
-                <div class="glass p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-xl hover:shadow-yellow-500/5 border-t-4 border-yellow-500 group" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass p-8 rounded-none border-t-4 border-yellow-500 transition-all duration-300 hover:-translate-y-3 hover:bg-yellow-950/10 hover:shadow-xl hover:shadow-yellow-500/10 hover:border-yellow-400 group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
                     <i data-lucide="layers" class="w-10 h-10 text-yellow-500 mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"></i>
                     <h3 class="text-xl font-bold mb-3">Sistemas Integrados (ILPF)</h3>
                     <p class="opacity-70 text-sm leading-relaxed">Rotação de lavoura, pecuária e floresta para recuperar o solo e reduzir a pegada de carbono.</p>
                 </div>
                 
-                <div class="glass p-8 transition-all duration-300 hover:-translate-y-3 hover:shadow-xl hover:shadow-emerald-500/5 border-t-4 border-emerald-500 group" data-aos="fade-up" data-aos-delay="300">
+                <div class="glass p-8 rounded-none border-t-4 border-emerald-500 transition-all duration-300 hover:-translate-y-3 hover:bg-emerald-950/20 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-400 group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
                     <i data-lucide="leaf" class="w-10 h-10 text-emerald-500 mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"></i>
                     <h3 class="text-xl font-bold mb-3">Bioinsumos</h3>
                     <p class="opacity-70 text-sm leading-relaxed">Uso de defensores naturais e microrganismos benéficos, reduzindo os químicos pesados.</p>
@@ -210,21 +323,21 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                 <div class="transition-transform duration-300 hover:scale-105">
                     <div class="flex justify-center items-baseline gap-1 mb-2">
-                        <h4 class="text-6xl font-black text-blue-400 counter" data-target="45">0</h4>
+                        <h4 class="text-6xl font-black text-blue-400 counter" data-target="45">45</h4>
                         <span class="text-blue-400 font-bold text-2xl">%</span>
                     </div>
                     <p class="text-xs uppercase font-bold tracking-widest opacity-70">Redução no Uso de Água</p>
                 </div>
                 <div class="transition-transform duration-300 hover:scale-105">
                     <div class="flex justify-center items-baseline gap-1 mb-2">
-                        <h4 class="text-6xl font-black text-green-400 counter" data-target="100">0</h4>
+                        <h4 class="text-6xl font-black text-green-400 counter" data-target="100">100</h4>
                         <span class="text-green-400 font-bold text-2xl">%</span>
                     </div>
                     <p class="text-xs uppercase font-bold tracking-widest opacity-70">Áreas Mapeadas por IA</p>
                 </div>
                 <div class="transition-transform duration-300 hover:scale-105">
                     <div class="flex justify-center items-baseline gap-1 mb-2">
-                        <h4 class="text-6xl font-black text-purple-400 counter" data-target="60">0</h4>
+                        <h4 class="text-6xl font-black text-purple-400 counter" data-target="60">60</h4>
                         <span class="text-purple-400 font-bold text-2xl">%</span>
                     </div>
                     <p class="text-xs uppercase font-bold tracking-widest opacity-70">Corte em Defensivos Químicos</p>
@@ -319,7 +432,7 @@
     </main>
 
     <div id="locationModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity opacity-0 duration-300">
-        <div class="bg-[var(--bg)] p-8 rounded-3xl max-w-4xl w-full mx-4 relative border border-white/10 shadow-2xl transition-transform transform scale-95 duration-300" id="modalContent">
+        <div class="bg-[#0b0f17] p-8 rounded-3xl max-w-4xl w-full mx-4 relative border border-white/10 shadow-2xl transition-transform transform scale-95 duration-300" id="modalContent">
             
             <button id="closeMapModalBtn" class="absolute top-4 right-4 p-2 bg-red-500/10 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all active:scale-90 z-10">
                 <i data-lucide="x" class="w-6 h-6"></i>
@@ -331,14 +444,14 @@
             </div>
             
             <div class="w-full flex justify-center select-none">
-                <div id="modalMapWrapper" class="relative w-full max-w-[400px] aspect-square">
+                <div id="modalMapWrapper" class="relative w-full max-w-[600px] aspect-square">
                     <svg viewBox="250 180 250 250" class="w-full h-full drop-shadow-2xl colored-map">
-                        <path data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
-                        <path data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
-                        <path data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
-                        <path data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
-                        <path data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
-                        <path data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
+                        <path class="biome-path" data-biome="amazonia" d="M300.8,235.6 L297,252.7 L281.1,257.6 L277.3,272.2 L288.8,281.1 L294,278.6 L298,285.2 L309.4,286.7 L320,280.3 L321.7,290.1 L346.1,300.4 L347.4,311.1 L357.6,312.3 L360.8,308.3 L368.5,292.9 L378.5,298.3 L390,291.9 L391.3,286.8 L408.3,258.9 L417.9,256.7 L425.1,242.8 L411.1,232.9 L397.4,230.3 L389.7,211.1 L381.5,220 L365.7,219.2 L353.8,224.7 L347.4,219.6 L346.1,206 L337.1,211.5 L325.6,211.5 L324.7,211.9 L330.3,220.5 L320.5,227.7 L308.9,222.2 L298,225.6 Z" />
+                        <path class="biome-path" data-biome="cerrado" d="M436.2,244.7 L425.2,243.1 L418.2,257 L408.3,258.9 L391.3,287.5 L389.4,292.9 L377.6,297.6 L368.5,292.9 L360.8,308.3 L369.8,308.9 L374.6,317.3 L370.1,330.4 L362.8,328.5 L363.4,336.2 L360.5,338.4 L369.4,342 L370.9,346.4 L370.7,347 L373,337.1 L384.2,339.4 L395.6,327.3 L418.2,332.6 L429,325.9 L429.1,326.6 L428.6,322.7 L434.9,317.8 L435.3,305.5 L427.2,310.8 L427.5,310.5 L423.7,291.3 L427.1,271.4 L437.8,263.4 L439.7,258 L436.1,244.9 Z" />
+                        <path class="biome-path" data-biome="pantanal" d="M356.8,311.9 L360.6,320.9 L357.6,338 L360.6,338.3 L360.5,338.4 L363.4,336.2 L363.4,329.1 L362.8,328.5 L370.8,330.4 L374.6,317.3 L369.8,308.9 L360.8,308.6 L358,313.4 Z" />
+                        <path class="biome-path" data-biome="caatinga" d="M469.7,256.8 L445.7,246.2 L436.8,245.3 L436.2,245 L439.6,258.6 L439.7,258 L437.8,263.8 L437.8,263.5 L427.2,271.8 L427.1,271.5 L423.4,292 L423.7,291.3 L427.6,310.5 L427.2,310.9 L435.6,305.4 L435.6,306.1 L445.2,300.6 L445.1,300.7 L448.4,292.3 L448.1,292.9 L469.2,270.8 L468.8,270.8 L469.9,256.7 Z" />
+                        <path class="biome-path" data-biome="mata_atlantica" d="M371.4,344.7 L372.4,350.6 L371.8,350 L381.3,363.8 L381.6,363.2 L376.7,367 L384.3,368.3 L384.9,367.6 L378.5,374.7 L395.8,375 L402.2,370.1 L405,359.5 L418.6,347.4 L438.5,343.6 L450.7,322.2 L452.1,298.3 L473.1,271.8 L470.1,256.4 L468.8,270.8 L448.1,292.9 L445.1,300.7 L435.6,306.1 L434.9,317.8 L428.6,322.8 L429.2,326.6 L417.3,332.6 L395.5,327.1 L384.3,339.4 L373.1,337.2 L370.8,347 Z" />
+                        <path class="biome-path" data-biome="pampa" d="M376.6,367.2 L363.5,377.4 L385.5,390.2 L397.9,375.7 L378.2,374.7 L384.9,367.6 L375.9,367.3 Z" />
                     </svg>
                     <div id="pinContainer" class="absolute inset-0 pointer-events-none"></div>
                 </div>
@@ -348,14 +461,91 @@
     </div>
 
     <footer class="bg-black/20 border-t border-white/5 py-12 text-center text-[10px] opacity-40 uppercase tracking-[0.3em]">
-        Agrinho 2026 • Sustentabilidade em cada clique
+        Agrinho 2026 • Sustentabilidade e Tecnologia Digital
     </footer>
 
-    <button id="backToTop" class="fixed bottom-6 right-6 hidden z-50 p-3 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-110 active:scale-90">
-        <i data-lucide="arrow-up" class="w-6 h-6"></i>
-    </button>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Inicializações estruturais
+        AOS.init({ duration: 1000, once: true });
+        lucide.createIcons();
+
+        // Dados de mock dos Biomas para interatividade
+        const biomesData = {
+            amazonia: { emoji: "🌳", name: "Amazônia", prod: "Manejo de castanha e cacau nativo rastreados.", cons: "Sensores térmicos contra desmatamento ilegal.", score: "94%" },
+            cerrado: { emoji: "🌾", name: "Cerrado", prod: "Grãos de alta performance com plantio direto.", cons: "Sistemas integrados Lavoura-Pecuária-Floresta.", score: "88%" },
+            pantanal: { emoji: "🐊", name: "Pantanal", prod: "Pecuária extensiva orgânica certificada.", cons: "Mapeamento hidrográfico via satélite em tempo real.", score: "91%" },
+            caatinga: { emoji: "🌵", name: "Caatinga", prod: "Fruticultura irrigada de precisão solar.", cons: "Microaspersão subterrânea anti-evaporação.", score: "85%" },
+            mata_atlantica: { emoji: "🌺", name: "Mata Atlântica", prod: "Sistemas agroflorestais de café e palmito.", cons: "Drones plantadores para reflorestamento ativo.", score: "89%" },
+            pampa: { emoji: "🌱", name: "Pampa", prod: "Pastoreio rotacional controlado por IoT.", cons: "Softwares de monitoramento de biomassa do solo.", score: "87%" }
+        };
+
+        // Lógica do Monitor de Biomas
+        document.querySelectorAll('.biome-path').forEach(path => {
+            path.addEventListener('click', function() {
+                const biomeKey = this.getAttribute('data-biome');
+                const data = biomesData[biomeKey];
+                
+                if(data) {
+                    document.getElementById('placeholderMsg').classList.add('hidden');
+                    document.getElementById('contentArea').classList.remove('hidden');
+                    
+                    document.getElementById('bEmoji').innerText = data.emoji;
+                    document.getElementById('bName').innerText = data.name;
+                    document.getElementById('bProd').innerText = data.prod;
+                    document.getElementById('bCons').innerText = data.cons;
+                    document.getElementById('susVal').innerText = data.score;
+                    document.getElementById('susFill').style.width = data.score;
+                }
+            });
+        });
+
+        // Controle do Modal de Localização
+        const locModal = document.getElementById('locationModal');
+        const modalContent = document.getElementById('modalContent');
+        document.getElementById('openMapModalBtn').addEventListener('click', () => {
+            locModal.classList.remove('hidden');
+            setTimeout(() => { locModal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10);
+        });
+        document.getElementById('closeMapModalBtn').addEventListener('click', () => {
+            locModal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => locModal.classList.add('hidden'), 300);
+        });
+
+        // Alternador Dark/Light Mode
+        let darkMode = true;
+        document.getElementById('darkToggle').addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.style.backgroundColor = darkMode ? '#0b0f17' : '#f8fafc';
+            document.body.style.color = darkMode ? '#f3f4f6' : '#0f172a';
+            document.getElementById('iconMoon').classList.toggle('hidden');
+            document.getElementById('iconSun').classList.toggle('hidden');
+        });
+
+        // Lógica dos Cards do Ecossistema (Aumentar Texto na Tela)
+        function openCardModal(title, text) {
+            const modal = document.getElementById('agroCardModal');
+            const innerContent = document.getElementById('agroModalContent');
+            
+            document.getElementById('agroModalTitle').innerText = title;
+            document.getElementById('agroModalText').innerText = text;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                innerContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeCardModal() {
+            const modal = document.getElementById('agroCardModal');
+            const innerContent = document.getElementById('agroModalContent');
+            
+            modal.classList.add('opacity-0');
+            innerContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+    </script>
 </body>
 </html>

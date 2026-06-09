@@ -130,7 +130,7 @@ body {
     content: '';
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%);    
     width: 2px;
     height: 100%;
     background: linear-gradient(to bottom, #22c55e, #3b82f6, #a855f7);
@@ -150,3 +150,5 @@ body.light-mode .progress-bar { background: rgba(0, 0, 0, 0.1); }
 @media (max-width: 768px) {
     .timeline-line::before { left: 24px; }
 }
+
+

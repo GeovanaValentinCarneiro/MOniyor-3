@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === locationModal) closeModal();
     });
 
-    // 🛑 AQUI ESTÁ A LÓGICA ATUALIZADA COM O CLAMPING NAS BORDAS
+    // LÓGICA DE CLIQUE E CLAMPING
     modalMapWrapper.addEventListener("click", (e) => {
         if (e.target.tagName.toLowerCase() !== 'path') return;
 
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let percentX = (x / rect.width) * 100;
         let percentY = (y / rect.height) * 100;
 
-        // Limita as coordenadas para o alfinete não vazar da caixa invisível
+        // Limita as coordenadas para o alfinete não vazar
         percentX = Math.max(5, Math.min(90, percentX));
         percentY = Math.max(10, Math.min(95, percentY));
 
@@ -173,22 +173,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 6. DARK / LIGHT MODE
-    const darkToggle = document.getElementById("darkToggle");
-    const iconMoon = document.getElementById("iconMoon");
-    const iconSun = document.getElementById("iconSun");
+const darkToggle = document.getElementById("darkToggle");
 
-    darkToggle.addEventListener("click", () => {
-        document.body.classList.toggle("light-mode");
-        const isLight = document.body.classList.contains("light-mode");
-        
-        if (isLight) {
-            iconMoon.classList.add("hidden");
-            iconSun.classList.remove("hidden");
-        } else {
-            iconMoon.classList.remove("hidden");
-            iconSun.classList.add("hidden");
-        }
-    });
+darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    
+    // Atualiza os ícones forçando a renderização do Lucide ou manipulando o SVG gerado
+    const isLight = document.body.classList.contains("light-mode");
+    const moonIcon = document.getElementById("iconMoon");
+    const sunIcon = document.getElementById("iconSun");
+
+    if (isLight) {
+        moonIcon.style.display = 'none';
+        sunIcon.style.display = 'inline-block';
+        sunIcon.classList.remove('hidden');
+    } else {
+        moonIcon.style.display = 'inline-block';
+        sunIcon.style.display = 'none';
+    }
+});
 
     // 7. BOTÃO VOLTAR AO TOPO
     const backToTop = document.getElementById("backToTop");
